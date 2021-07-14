@@ -85,8 +85,22 @@ def profile(username):
     first_name = mongo.db.users.find_one({"username": session["user"]})["first_name"]
     last_name = mongo.db.users.find_one({"username": session["user"]})["last_name"]
     company = mongo.db.users.find_one({"username": session["user"]})["company"]
-    return render_template("profile.html", username=username,
-        first_name=first_name, last_name=last_name, company=company)
+
+    if session["user"]:
+        return render_template("profile.html", username=username,
+            first_name=first_name, last_name=last_name, company=company)
+
+    return redirect(url_for("login"))
+
+
+@app.route("/logout")
+def logout():
+    # remove session from cookies
+    flash("You've been safely logged out.")
+    session.pop("user")
+    return redirect(url_for("login"))
+
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
