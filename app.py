@@ -27,31 +27,29 @@ def get_tasks():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    existing_user = False
     if request.method == "POST":
         # Check if username already exists in database.
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
-        print(existing_user)
+        flash("existing_user")
 
-    if existing_user:
-        flash("Username already exists")
-        return redirect(url_for("register"))
+        if existing_user:
+            flash("Username already exists")
+            return redirect(url_for("register"))
+            
+        register_details = {
+            "username": request.form.get("username").lower(),
+            "first_name": request.form.get("first_name").lower(),
+            "last_name": request.form.get("last_name").lower(),
+            "company": request.form.get("company").lower(),
+            "password": generate_password_hash(request.form.get("password"))
+        }
+        mongo.db.users.insert_one(register_details)
+        
+        # Put user into session cookie.
+        session["user"] = request.form.get("username").lower()
+        flash("Registration Successful")
     return render_template("register.html")
-
-    # Dictionary containing user registration details from form
-    register_details = {
-        "username": request.form.get("username").lower(),
-        "first_name": request.form.get("first_name").lower(),
-        "last_name": request.form.get("last_name").lower(),
-        "company": request.form.get("company").lower(),
-        "password": generate_password_hash(request.form.get("password"))
-    }
-    mongo.db.users.insert_one(register_details)
-
-    # Put user into session cookie.
-    session["user"] = request.form.get("username").lower()
-    flash("Registration Successful")
 
 
 if __name__ == "__main__":
