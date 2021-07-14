@@ -39,9 +39,9 @@ def register():
             
         register_details = {
             "username": request.form.get("username").lower(),
-            "first_name": request.form.get("first_name").lower(),
-            "last_name": request.form.get("last_name").lower(),
-            "company": request.form.get("company").lower(),
+            "first_name": request.form.get("first_name"),
+            "last_name": request.form.get("last_name"),
+            "company": request.form.get("company"),
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register_details)
