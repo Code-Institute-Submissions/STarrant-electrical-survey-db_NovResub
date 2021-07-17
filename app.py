@@ -113,6 +113,25 @@ def get_rooms():
     rooms = list(mongo.db.electricalRooms.find())
     return render_template("rooms.html", rooms=rooms)
 
+
+# Render add electrical room page
+@app.route("/add_room", methods=["GET", "POST"])
+def add_room():
+    if request.method == "POST":
+        new_room = {
+            "roomRef": request.form.get("room_ref"),
+            "roomDesc": request.form.get("room_desc"),
+            "roomVolts": request.form.get("room_volts"),
+            "roomType": request.form.get("room_type"),
+            "createdBy": session["user"]
+        }
+        mongo.db.electricalRooms.insert_one(new_room)
+        flash("New electrical room added successfully.")
+    voltages = list(mongo.db.voltages.find().sort("voltage", 1))
+    types = list(mongo.db.roomTypes.find().sort("type", 1))
+    return render_template("addroom.html", voltages=voltages, types=types)
+
+
 # Main function
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

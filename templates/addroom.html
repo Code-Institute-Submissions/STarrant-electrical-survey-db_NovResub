@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>Add an Electrical Room</h2>
+    
+    <div class="row">
+        <form class="col s12" method="POST" action="">
+            <div class="row">
+                <!-- Input Field for Room Designation -->
+                <div class="input-field col s12">
+                    <input id="room_ref" name="room_ref" type="text" class="validate" required>
+                    <label for="room_ref">Room Reference</label>
+                </div>
+                <!-- Input Field for Room Description -->
+                <div class="input-field col s12">
+                    <input id="room_desc" name="room_desc" type="text" class="validate" required>
+                    <label for="room_desc">Room Description</label>
+                </div>
+                <!-- Input Field for Highest Voltage Level -->
+                <div class="input-field col s12">
+                    <input id="room_volts" name="room_volts" type="text" class="validate" required>
+                    <label for="room_volts">Highest Voltage Level</label>
+                </div>
+                <!-- Input Field for Room Type -->
+                <div class="input-field col s12">
+                    <input id="room_type" name="room_type" type="text" class="validate" required>
+                    <label for="room_type">Electrical Room Type</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
