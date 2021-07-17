@@ -4,7 +4,7 @@
     <h2>Add an Electrical Room</h2>
     
     <div class="row">
-        <form class="col s12" method="POST" action="">
+        <form class="col s12" method="POST" action="{{ url_for('add_room') }}">
             <!-- Input Field for Room Designation -->
             <div class="row">
                 <div class="input-field col s12">
@@ -42,6 +42,14 @@
                     </select>
                     <label for="room_type">Room Type:</label>
                   </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <button type="submit" class="btn-large yellow darken-3">
+                        Add Room <i class="fas fa-plus-square right"></i>
+                    </button>
+                </div>
             </div>
         </form>
     </div>

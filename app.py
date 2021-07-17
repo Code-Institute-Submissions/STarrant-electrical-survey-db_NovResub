@@ -127,6 +127,7 @@ def add_room():
         }
         mongo.db.electricalRooms.insert_one(new_room)
         flash("New electrical room added successfully.")
+        return redirect(url_for("get_tasks")) # TESTHIGH NEED TO REMOVE
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
     return render_template("addroom.html", voltages=voltages, types=types)
