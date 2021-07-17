@@ -110,7 +110,7 @@ def logout():
 # Render electrical rooms page
 @app.route("/get_rooms")
 def get_rooms():
-    rooms = mongo.db.electricalRooms.find()
+    rooms = list(mongo.db.electricalRooms.find())
     return render_template("rooms.html", rooms=rooms)
 
 # Main function

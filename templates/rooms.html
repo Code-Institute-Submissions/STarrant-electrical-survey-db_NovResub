@@ -2,12 +2,22 @@
 {% block content %}
 
     <h2> Electrical Room List </h2>
+    <ul class="collapsible">
+        {% for room in rooms %}
+        <li>
+            <div class="collapsible-header">
+                <i class="fas fa-caret-down"></i>
+                <strong>{{ room.roomRef }}</strong>
+            </div>
+            <div class="collapsible-body">
+                <p><strong>Room Reference:  </strong>{{ room.roomRef }}</p>
+                <p><strong>Room Description:  </strong>{{ room.roomDesc }}</p>
+                <p><strong>Room Type:  </strong>{{ room.roomType }}</p>
+                <p><strong>Highest Voltage:  </strong>{{ room.roomVolts }}</p>
 
+            </div>
+        </li>
+        {% endfor %}
+      </ul>
 
-    {% for room in rooms %}
-        {{ room.roomRef }}<br>
-        {{ room.roomDesc }}<br>
-        {{ room.roomType }}<br>
-        {{ room.roomVolts }}<br>
-    {% endfor %}
 {% endblock %}
