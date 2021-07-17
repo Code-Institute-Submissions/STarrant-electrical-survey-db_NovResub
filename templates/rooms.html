@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2> Electrical Room List </h2>
+
+
+    {% for room in rooms %}
+        {{ room.roomRef }}<br>
+        {{ room.roomDesc }}<br>
+        {{ room.roomType }}<br>
+        {{ room.roomVolts }}<br>
+    {% endfor %}
+{% endblock %}

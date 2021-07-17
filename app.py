@@ -18,6 +18,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+# Render main page
 @app.route("/")
 @app.route("/get_tasks")
 def get_tasks():
@@ -25,6 +26,7 @@ def get_tasks():
     return render_template("tasks.html", tasks=tasks)
 
 
+# Render registration page
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -53,6 +55,7 @@ def register():
     return render_template("register.html")
 
 
+# Render login page
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -79,6 +82,7 @@ def login():
     return render_template("login.html")
 
 
+# Render user profile page
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     username = mongo.db.users.find_one({"username": session["user"]})["username"]
@@ -93,6 +97,7 @@ def profile(username):
     return redirect(url_for("login"))
 
 
+# Logout function
 @app.route("/logout")
 def logout():
     # remove session from cookies
@@ -101,7 +106,14 @@ def logout():
     return redirect(url_for("login"))
 
 
+# Manage section
+# Render electrical rooms page
+@app.route("/get_rooms")
+def get_rooms():
+    rooms = mongo.db.electricalRooms.find()
+    return render_template("rooms.html", rooms=rooms)
 
+# Main function
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
