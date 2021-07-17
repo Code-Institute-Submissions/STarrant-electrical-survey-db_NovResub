@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Compiled and minified FontAwesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css">
-    <!-- Compiled and minified Materialize CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-    {% block styles %}
-    {% endblock %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Compiled and minified FontAwesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css">
+  <!-- Compiled and minified Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+  {% block styles %}
+  {% endblock %}
 
 
-    <title>Electrical Survey</title>
+  <title>Electrical Survey</title>
 </head>
 <body>
     <header>
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
+          <li><a href="{{ url_for('get_rooms') }}">DB Room List</a></li>
+          <li><a href="{{ url_for('add_room') }}">Add a DB Room</a></li>
+          <li><a href="#!">Survey Questions List</a></li>
+          <li class="divider"></li>
+          <li><a href="#!">Users</a></li>
+        </ul>
+        <ul id="dropdown2" class="dropdown-content">
           <li><a href="{{ url_for('get_rooms') }}">DB Room List</a></li>
           <li><a href="{{ url_for('add_room') }}">Add a DB Room</a></li>
           <li><a href="#!">Survey Questions List</a></li>
@@ -37,7 +44,7 @@
                   <li><a href="#">New Survey</a></li>
                   <li><a href="#">New Issue</a></li>
                   <!-- Dropdown Trigger -->
-                  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Manage<i class="fas fa-cog"></i></a></li>
+                  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Manage</a></li>
                   <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                 {% else %}
                   <li><a href="{{ url_for('login') }}">Log In</a></li>
@@ -55,7 +62,7 @@
               <li><a href="#">New Survey</a></li>
               <li><a href="#">New Issue</a></li>
               <!-- Dropdown Trigger -->
-              <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Manage   <i class="fas fa-cog"></i></a></li>
+              <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">Manage</a></li>
               <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
               <li><a href="{{ url_for('login') }}">Log In</a></li>
