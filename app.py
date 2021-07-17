@@ -107,12 +107,20 @@ def logout():
 
 
 # Manage section
-# Render electrical rooms page
+# Render electrical rooms list page
 @app.route("/get_rooms")
 def get_rooms():
     rooms = list(mongo.db.electricalRooms.find())
     return render_template("rooms.html", rooms=rooms)
 
+
+# Edit an individual electrical room's details
+@app.route("/edit_room/<room_id>", methods=["GET", "POST"])
+def edit_room(room_id):
+    room = mongo.db.electricalRooms.find_one({"_id": ObjectId(room_id)})
+    voltages = list(mongo.db.voltages.find().sort("_id", 1))
+    types = list(mongo.db.roomTypes.find().sort("_id", 1))
+    return render_template("edit_room.html", room=room, voltages=voltages, types=types)
 
 # Render add electrical room page
 @app.route("/add_room", methods=["GET", "POST"])

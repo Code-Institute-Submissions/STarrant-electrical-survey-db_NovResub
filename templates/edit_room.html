@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>Edit an Electrical Room</h2>
+    
+    <div class="row">
+        <form class="col s12" method="POST" action="{{ url_for('edit_room', room_id=room._id) }}">
+            <!-- Input Field for Room Designation -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input value="{{ room.roomRef }}" id="room_ref" name="room_ref" type="text" class="validate" required>
+                    <label for="room_ref">Room Reference:</label>
+                </div>
+            </div>
+            <!-- Input Field for Room Description -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input value="{{ room.roomDesc }}" id="room_desc" name="room_desc" type="text" class="validate" required>
+                    <label for="room_desc">Room Description:</label>
+                </div>
+            </div>
+            <!-- Select Dropdown for Highest Voltage Level -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="room_volts" name="room_volts" class="validate" required>
+                        <!-- Loop through options from MongoDB to generate list. -->
+                        {% for voltage in voltages %}
+                            <!-- Check if option passed into rendered page matches database. If so, set this as selected. -->
+                            {% if voltage.voltage == room.roomVolts %}
+                                <option value="{{ voltage.voltage }}" selected>{{ voltage.voltage }}</option>
+                            {% else %}
+                                <option value="{{ voltage.voltage }}">{{ voltage.voltage }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for="room_volts">Highest Voltage Level:</label>
+                  </div>
+            </div>
+            <!-- Select Dropdown for Room Type -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="room_type" name="room_type" class="validate" required>
+                        <!-- Loop through options from MongoDB to generate list. -->
+                        {% for type in types %}
+                            <!-- Check if option passed into rendered page matches database. If so, set this as selected. -->
+                            {% if type.type == room.roomType %}
+                                <option value="{{ type.type }}" selected>{{ type.type }}</option>
+                            {% else %}
+                                <option value="{{ type.type }}">{{ type.type }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for="room_type">Room Type:</label>
+                  </div>
+            </div>
+            <!-- Cancel and Edit Button -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('get_rooms') }}" class="btn-large red accent-2">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="btn-large yellow darken-3">
+                        Edit Room <i class="fas fa-edit right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
