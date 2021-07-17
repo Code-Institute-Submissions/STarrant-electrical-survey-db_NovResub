@@ -5,4 +5,6 @@ $(document).ready(function(){
     $(".dropdown-trigger").dropdown();
     // JQuery for Materialize Collapsible element.
     $('.collapsible').collapsible();
+    // JQuery for Materialize form select element.
+    $('select').formSelect();
   });

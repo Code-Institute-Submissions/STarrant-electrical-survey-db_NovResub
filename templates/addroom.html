@@ -9,29 +9,39 @@
             <div class="row">
                 <div class="input-field col s12">
                     <input id="room_ref" name="room_ref" type="text" class="validate" required>
-                    <label for="room_ref">Room Reference</label>
+                    <label for="room_ref">Room Reference:</label>
                 </div>
             </div>
             <!-- Input Field for Room Description -->
             <div class="row">
                 <div class="input-field col s12">
                     <input id="room_desc" name="room_desc" type="text" class="validate" required>
-                    <label for="room_desc">Room Description</label>
+                    <label for="room_desc">Room Description:</label>
                 </div>
             </div>
-            <!-- Input Field for Highest Voltage Level -->
+            <!-- Select Dropdown for Highest Voltage Level -->
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="room_volts" name="room_volts" type="text" class="validate" required>
-                    <label for="room_volts">Highest Voltage Level</label>
-                </div>
+                    <select id="room_volts" name="room_volts" class="validate" required>
+                        <option value ="" disabled selected>Choose highest voltage level in room.</option>
+                        {% for voltage in voltages %}
+                            <option value="{{ voltage.voltage }}">{{ voltage.voltage }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="room_volts">Highest Voltage Level:</label>
+                  </div>
             </div>
-            <!-- Input Field for Room Type -->
+            <!-- Select Dropdown for Room Type -->
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="room_type" name="room_type" type="text" class="validate" required>
-                    <label for="room_type">Electrical Room Type</label>
-                </div>
+                    <select id="room_type" name="room_type" class="validate" required>
+                        <option value ="" disabled selected>Choose the room type.</option>
+                        {% for type in types %}
+                            <option value="{{ type.type }}">{{ type.type }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="room_type">Room Type:</label>
+                  </div>
             </div>
         </form>
     </div>
