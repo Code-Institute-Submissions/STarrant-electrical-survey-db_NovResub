@@ -2,8 +2,6 @@
 
 * A data-driven web application for tracking electrical safety issues across your site(s).
 
-![Multi Device Mockup Image](/wireframes/quizchallenge_multidevicewebsitemockupgenerator_techsini.com.png)   *IMAGE TO BE ADDED HERE!!!!!!!
-
 ## Contents
 
 ---
@@ -37,66 +35,62 @@
 
 ### User Goals
 
-* Intuitive interface that requires no explanation to perform CRUD operations on the available data.
-* Goal 2
-* Goal 3
-* Goal 4
+* User registration available to sign up as a site-user.
+* View, add, modify and delete electrical rooms from the survey.
+* View, add, modify and delete survey questions from the site.
+* Create individual issue notifications.
+* Get an overview of the status of all the surveyed rooms.
 
 ### User Stories
 
-* As a **user**, I want to see a simple, fun and intuitive layout.
-* As a **user**, 
-* As a **user**, 
-* As a **user**, 
-* As a **user**, 
-* As a **user**, 
+* As a **user**, I want to see a simple, intuitive interface that requires zero learning to use.
+* As a **user**, I want to be able to use a mobile device to carry out a survey. (e.g. A tablet or mobile phone)
+* As a **user**, I want to be able to view a list of the electrical rooms.
+* As a **user**, I want to be able to add a new electrical room to the survey.
+* As a **user**, I want to be able to modify an electrical room's details.
+* As a **user**, I want to be able to delete an electrical room from the survey.
+* As a **user**, I want to be able to carry out an electrical survey of a room and save the data to the site.
+* As a **user**, I want to be able view the results of surveys carried out.
+* As a **user**, I want to be able see an overview of current issues.
 
 ### Site Owner Goals
 
-* As a **site-owner**, 
-* As a **site-owner**, 
-* As a **site-owner**, 
+* As a **site-owner**, I want to be able to see a list of users for the site.
+* As a **site-owner**, I want to have user authentication to ensure malicious activity is avoided.
+* As a **site-owner**, I want to be able to manage the electrical data for the site in a simple, effective and secure way.
 
 ### User Requirements and Expectations
 
 #### Requirements
 
-* Simple single-page interface with header, game area and footer with about/contact/credits/disclaimer.
-* Fast loading times are imperative to avoid a user leaving the page due to lag.
-* Contact form for users to send requests, suggestions or trivia questions.
-* Bright and cheerful colors and styling.
-* Dropdowns to allow customisibility of the questions drawn.
+* Simple, responsive, data-driven site.
+* Fast loading times are imperative.
+* No frills, high-contrast layout for maximum legibity since this site will primarily be used on mobile devices in the field.
+* Intuitive navigation and site operation with flash messages for good UX.
 
 #### Expectations
 
-* Content is visually satisfying and exciting to look at.
-* Game automatically cycles from start page, through questions to final score without glitching or issues.
+* Content is visually minimalist and clear to look at.
 * The design is responsive and will work across a wide variety of screen sizes.
+* No frills to ensure fast loading times.
 
 ### Design Choices
 
 ---
 
-Design choices text here....................................................
-............................................................................
-............................................................................
+In terms of design, the standard materialize fonts and color schemes were used for the sake of simplicity. An amber-yellow color scheme was chosen to reflect the relevance of this site to safety with these colors being synonymous with ISO7010 warning signage.
 
 #### Fonts
 
-* [Google Fonts](https://fonts.google.com/) has been used to add typographic style to the site.
-With legibilty and ease of eye strain being a key focus for site users.
-[Roboto](https://fonts.google.com/specimen/Roboto) was chosen as the main font with....................
-Text here for logo design..............................................................................
+* [Materialize Typography](https://materializecss.com/typography.html) has been used throughout the site. With legibilty and ease of eye strain being a key focus for site users, the standard Materialize fonts are excellent.
 
 #### Icons
 
-* [FontAwesome](https://fontawesome.com/) free icons were used in early versions of the project but have since been removed. They may be reintroduced in a future version.
+* [FontAwesome](https://fontawesome.com/) free icons were used throughout this project.
 
 #### Colors
 
-The website colors were chosen using [coolors.co](https://coolors.co/).
-
-![Quiz Challenge Coolors Color Selection](/wireframes/qc_coolors.png)   Text here to change the picture.
+The website colors were chosen using [Materialize Colors](https://materializecss.com/color.html).
 
 ## Wireframing
 
@@ -123,20 +117,22 @@ these wireframes were relatively faithfully produced. Other aspects of the desig
 ---
 **Features** that have been **implemented:**
 
-* Feature 1
-* Feature 2
-* Feature 3
-* Feature 4
-* Feature 5
+* User authentication with log in and logout functions available.
+* User profile page with username, First Name, Surname and Company name available.
+* List of DB rooms is available with each of the details available in collapsible elements.
+* Create, update and delete possible to rooms and their details.
 
 
 **Features** that will be **implemented** in the **future:**
 
-* Feature 1
-* Feature 2
-* Feature 3
-* Feature 4
-* Feature 5
+* List of survey questions will be available with each of the details available in collapsible elements.
+* Create, update and delete possible to survey questions.
+* Overview of status of electrical rooms with pass/fail point numbers.
+* List of users on the site with edit and delete possible for admin users.
+* Carry out an electrical survey and store the data.
+* View completed surveys and edit results.
+* Create a single inspection point.
+
 
 ## Technologies Used
 
@@ -162,6 +158,7 @@ these wireframes were relatively faithfully produced. Other aspects of the desig
 * [JSHint](https://jshint.com/)
 * [MongoDB](https://www.mongodb.com/)
 * [Heroku](https://www.heroku.com/)
+* [Jinja Templating for Python](https://jinja.palletsprojects.com/en/3.0.x/)
 * [Random Key Generator](https://randomkeygen.com/)
 
 
