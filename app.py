@@ -117,6 +117,17 @@ def get_rooms():
 # Edit an individual electrical room's details
 @app.route("/edit_room/<room_id>", methods=["GET", "POST"])
 def edit_room(room_id):
+    if request.method == "POST":
+        edited_room = {
+            "roomRef": request.form.get("room_ref"),
+            "roomDesc": request.form.get("room_desc"),
+            "roomVolts": request.form.get("room_volts"),
+            "roomType": request.form.get("room_type"),
+            "editedBy": session["user"]
+        }
+        mongo.db.electricalRooms.update({"_id": ObjectId(room_id)}, edited_room)
+        flash("Electrical room edited successfully.")
+        return redirect(url_for("get_rooms"))
     room = mongo.db.electricalRooms.find_one({"_id": ObjectId(room_id)})
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
