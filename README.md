@@ -96,17 +96,15 @@ The website colors were chosen using [Materialize Colors](https://materializecss
 
 <details>
   <summary>Wireframing was done using Balsamiq under full-functional trial provided by Code Institute.
-Wireframes were developed for a start screen, question screen and score screen. The main elements of
-these wireframes were relatively faithfully produced. Other aspects of the design developed more organically.</summary>
+Wireframes were developed for an add room screen as this was the only element of the project successfully implemented.
+Other aspects of the design developed more organically.
+NOTE TO CORRECTOR: OTHER WIREFRAMES SHOULD HAVE BEEN DEVELOPED FOR OTHER SCREENS.
+</summary>
 
 ### Project Wireframes
 
-* Landing Page and Login
-* ![Start Screen Wireframe](/wireframes/qc_wf_01_startscreen.png)
-* Survey Page
-* ![Question Screen Wireframe](/wireframes/qc_wf_02_questionscreen.png)
-* Data Page
-* ![Score Screen Wireframe](/wireframes/qc_wf_03_scorescreen.png)
+* Add a room screen
+* ![Add a room screen wireframe](/wireframes/wf_add_room_screen.png)
 
 </details>
 
@@ -172,19 +170,11 @@ HTML code has been tested using the [HTML Validator](https://validator.w3.org/) 
 
 #### HTML Test Errors
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* All errors related to illegal characters because of Jinja templating used.
 
 #### HTML Test Fixes
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 ### CSS Test
 
@@ -192,105 +182,53 @@ CSS code has been tested using the [CSS validator](http://jigsaw.w3.org/css-vali
 
 #### CSS Test Errors
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* No errors.
 
 #### CSS Test Warnings
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 #### CSS Test Fixes
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 ### JavaScript Test
 
 #### JavaScript Test Errors
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* No errors.
 
 #### JavaScript Test Warnings
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 #### JavaScript Test Fixes
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 ### Python Test
 
 #### Python Test Errors
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* Python errors were fixed using Gitpods built in linter to reduce error down to the single remaining error relating to env.py.
+* Most python issue were minor and relating to PEP8 complaince.
 
 #### Python Test Warnings
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 #### Python Test Fixes
 
-* Error 1
-* Error 2
-* Error 3
-* Error 4
-* Error 5
+* N/A
 
 ### Responsiveness
 
 <details>
-  <summary>Responsiveness of the design was tested using Chrome's Developer Tools and the result overall was a **PASS** but there is definitely a lot of room for improvement. Open the dropdown here to see screenshots of the results.</summary>
+  <summary>Responsiveness of the design was not tested. It will be tested using Chrome's Developer Tools in future.</summary>
 
 #### Summary of responsive design tests
 
-* Full Screen 24” Browser Window – Google Chrome – No Issues - **PASS**
-* Result: ![Responsive test Fullscreen](wireframes/esdb-responsive-fullscreen.jpg)
-* iPhone 6/7/8 – No Issues - **PASS**
-* Result: ![Responsive test iPhone 6/7/8](wireframes/esdb-responsive-iphone678.jpg)
-* iPhone 6/7/8 Plus – No issues - **PASS**
-* Result: ![Responsive test iPhone 6/7/8 Plus](wireframes/esdb-responsive-iphone678plus.jpg)
-* iPhone X – No issues - **PASS**
-* Result: ![Responsive test iPhone X](wireframes/esdb-responsive-iphonex.jpg)
-* iPad – No Issues - **PASS**
-* Result: ![Responsive test iPad](wireframes/esdb-responsive-ipad.jpg)
-* iPad Pro – Slight issue in that the site doesn’t have enough vertical height on 100% zoom. Otherwise no issue. - **PASS**
-* Result: ![Responsive test iPad Pro](wireframes/esdb-responsive-ipadpro.jpg)
-* Pixel 2 – No Issues - **PASS**
-* Result: ![Responsive test Pixel 2](wireframes/esdb-responsive-pixel2.jpg)
-* Pixel 2 XL – No Issues - **PASS**
-* Result: ![Responsive test Pixel 2 XL](wireframes/esdb-responsive-pixel2xl.jpg)
-* Galaxy S5 – No Issues - **PASS**
-* Result: ![Responsive test Galaxy S5](wireframes/esdb-responsive-galaxys5.jpg)
+* Site Responsiveness has not been tested.
 
 </details>
 
@@ -301,22 +239,13 @@ CSS code has been tested using the [CSS validator](http://jigsaw.w3.org/css-vali
 ### User Stories
 
 <details>
-  <summary>User stories were tested using Google Chrome and developer tools. Click dropdown to see individual tests.</summary>
+  <summary>User stories have not been tested.</summary>
   
 #### Summary of user tests
 
-* Test: As a **user**, ......................................................
-* Result: ![User test image 1](wireframes/esdb-user-story-1.jpg)
-* Test: As a **user**, ......................................................
-* Result: ![User test image 2](wireframes/esdb-user-story-2.jpg)
-* Test: As a **user**, ......................................................
-* Result: ![User test image 3](wireframes/esdb-user-story-3.jpg)
-* Test: As a **user**, ......................................................
-* Result: ![User test image 4](wireframes/esdb-user-story-4.jpg)
-* Test: As a **user**, ......................................................
-* Result: ![User test image 5](wireframes/esdb-user-story-5.jpg)
-* Test: As a **user**, ......................................................
-* Result: ![User test image 6](wireframes/esdb-user-story-6.jpg)
+* Test: NOT TESTED
+* Result: NOT TESTED
+
 
 </details>
 
@@ -336,13 +265,13 @@ Many bugs were encountered during the development of the project - all admittedl
 
 ### Testing Bugs
 
-* A few bugs were thrown up by the HTML Validator, CSS Validator, JSHint, Python Validator and PEP8 Validator. The solutions are given above in the **HTML Test**, **CSS Test**, **Javascript Test**, **Python Test** Sections.
+* A few bugs were thrown up during development and generally centered around getting .
 
 ## Deployment
 
 ---
 
-The site has been deployed on [Heroku](https://www.heroku.com/) with under the following link [electrical-survey-db](https://starrant.github.io/quiz_challenge/).
+The site has been deployed on [Heroku](https://www.heroku.com/) with under the following link [electrical-survey-db](http://electrical-survey-db.herokuapp.com/).
 
 ## Credits
 
@@ -351,12 +280,10 @@ The site has been deployed on [Heroku](https://www.heroku.com/) with under the f
 * [JSHint.com](https://jshint.com/) was used to error check the JavaScript code.
 * [Markdown guide basic syntax](https://www.markdownguide.org/basic-syntax/) was used as a reference in writing the README.md file.
 * [Markdownlint](https://dlaa.me/markdownlint/) by [David Anson](https://github.com/DavidAnson) was used for correcting the errors in my markdown. It is an awesome resource and saved me hours of correction time.
-* Code for box shadow on overview section generated by [cssgenerator.org](https://cssgenerator.org/box-shadow-css-generator.html). CSS code commented as such as per CI guidelines.
-* [Techsini](http://techsini.com/multi-mockup/index.php) was used to generate the multidevice image shown on at the start of the readme.
+* Code for box shadow on headers generated by [cssgenerator.org](https://cssgenerator.org/box-shadow-css-generator.html).
 
 ### Special Thanks
 
-* My Code Institute mentor, [Simen Daehlin](https://github.com/Eventyret), 
-* ..............................
-* ..............................
+* My Code Institute mentor, [Simen Daehlin](https://github.com/Eventyret). 
+* [Tim Nelson](https://github.com/TravelTimN) for his superb walk-through project on which this site is based. Without his tutorial videos, I would never have got Heroku, Github, Gitpod, Python, Jinja and Mongo all working together.
 
