@@ -108,10 +108,10 @@ def logout():
 
 # Manage section
 # Render electrical rooms list page
-@app.route("/get_rooms")
-def get_rooms():
+@app.route("/get_room_list")
+def get_room_list():
     rooms = list(mongo.db.electricalRooms.find())
-    return render_template("rooms.html", rooms=rooms)
+    return render_template("room-list.html", rooms=rooms)
 
 
 # Edit an individual electrical room's details

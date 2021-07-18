@@ -351,7 +351,6 @@ The site has been deployed on [Heroku](https://www.heroku.com/) with under the f
 
 ---
 
-* ..............................Photo attribution......................................
 * [JSHint.com](https://jshint.com/) was used to error check the JavaScript code.
 * [Markdown guide basic syntax](https://www.markdownguide.org/basic-syntax/) was used as a reference in writing the README.md file.
 * [Markdownlint](https://dlaa.me/markdownlint/) by [David Anson](https://github.com/DavidAnson) was used for correcting the errors in my markdown. It is an awesome resource and saved me hours of correction time.
