@@ -20,10 +20,10 @@ mongo = PyMongo(app)
 
 # Render main page
 @app.route("/")
-@app.route("/get_tasks")
-def get_tasks():
-    tasks = mongo.db.tasks.find()
-    return render_template("tasks.html", tasks=tasks)
+@app.route("/get_overview")
+def get_overview():
+    rooms = list(mongo.db.electricalRooms.find())
+    return render_template("overview.html", rooms=rooms)
 
 
 # Render registration page
@@ -154,7 +154,7 @@ def add_room():
         }
         mongo.db.electricalRooms.insert_one(new_room)
         flash("New electrical room added successfully.")
-        return redirect(url_for("get_tasks")) # TESTHIGH NEED TO REMOVE
+        return redirect(url_for("get_overview"))
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
     return render_template("addroom.html", voltages=voltages, types=types)

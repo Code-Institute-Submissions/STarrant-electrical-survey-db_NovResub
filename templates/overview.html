@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2> Survey Overview </h2>
+    <ul class="collapsible">
+        {% for room in rooms %}
+        <li>
+            <div class="collapsible-header row">
+                <div class="col s12">
+                    <i class="fas fa-caret-down"></i>
+                    <strong>{{ room.roomRef }}</strong>
+                </div>               
+            </div>
+            <div class="collapsible-body">
+                <p><strong>Room Reference:  </strong>{{ room.roomRef }}</p>
+                <p><strong>Room Description:  </strong>{{ room.roomDesc }}</p>
+                <p><strong>Room Type:  </strong>{{ room.roomType }}</p>
+                <p><strong>Highest Voltage:  </strong>{{ room.roomVolts }}</p>
+            </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+{% endblock %}

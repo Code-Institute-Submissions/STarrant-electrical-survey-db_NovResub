@@ -36,10 +36,10 @@
         <!-- Main Navigation Structure -->
         <nav class="nav-extended yellow accent-4">
             <div class="nav-wrapper">
-              <a href="{{ url_for('get_tasks') }}" class="brand-logo">Electrical Survey</a>
+              <a href="{{ url_for('get_overview') }}" class="brand-logo">Electrical Survey</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars">menu</i></a>
               <ul class="right hide-on-med-and-down">
-                <li><a href="{{ url_for('get_tasks') }}">Home</a></li>
+                <li><a href="{{ url_for('get_overview') }}">Home</a></li>
                 {% if session.user %}
                   <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                   <li><a href="#">New Survey</a></li>
@@ -56,7 +56,7 @@
           </nav>
         
           <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{ url_for('get_tasks') }}">Home</a></li>
+            <li><a href="{{ url_for('get_overview') }}">Home</a></li>
             <li><h4 class="center-align cyan-darken-3 ">Electrical Survey</h4></li>
             {% if session.user %}
               <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
