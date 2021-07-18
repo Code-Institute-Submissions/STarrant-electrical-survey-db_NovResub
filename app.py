@@ -1,7 +1,7 @@
 # CODE ATTRIBUTION:
 # The code for this website is based on the excellent Data Centric Design
 # Mini Project Walk-through by Tim Nelson (https://github.com/TravelTimN)
-# of Code Institute. Where custom functionality was required it was 
+# of Code Institute. Where custom functionality was required it was
 # generally based on modifying Tim's original logic to fulfill the
 # project requirements.
 
@@ -45,7 +45,7 @@ def register():
         if existing_user:
             flash("Username already exists")
             return redirect(url_for("register"))
-            
+
         register_details = {
             "username": request.form.get("username").lower(),
             "first_name": request.form.get("first_name"),
@@ -54,7 +54,7 @@ def register():
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register_details)
-        
+
         # Put user into session cookie.
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful")
@@ -69,14 +69,16 @@ def login():
         # check if username exists in db
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
-        
+
         if existing_user:
             # Check hashed password against password provided.
             if check_password_hash(
-                existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
-                    return redirect(url_for("profile", username=session["user"]))
+                existing_user["password"],
+                    request.form.get("password")):
+                session["user"] = request.form.get("username").lower()
+                flash("Welcome, {}".format(request.form.get("username")))
+                return redirect(
+                    url_for("profile", username=session["user"]))
             else:
                 # Display message in case password incorrect.
                 flash("Incorrect username or password")
@@ -92,14 +94,22 @@ def login():
 # Render user profile page
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    username = mongo.db.users.find_one({"username": session["user"]})["username"]
-    first_name = mongo.db.users.find_one({"username": session["user"]})["first_name"]
-    last_name = mongo.db.users.find_one({"username": session["user"]})["last_name"]
-    company = mongo.db.users.find_one({"username": session["user"]})["company"]
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    first_name = mongo.db.users.find_one(
+        {"username": session["user"]})["first_name"]
+    last_name = mongo.db.users.find_one(
+        {"username": session["user"]})["last_name"]
+    company = mongo.db.users.find_one(
+        {"username": session["user"]})["company"]
 
     if session["user"]:
-        return render_template("profile.html", username=username,
-            first_name=first_name, last_name=last_name, company=company)
+        return render_template(
+            "profile.html",
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            company=company)
 
     return redirect(url_for("login"))
 
@@ -144,13 +154,18 @@ def edit_room(room_id):
             "roomType": request.form.get("room_type"),
             "editedBy": session["user"]
         }
-        mongo.db.electricalRooms.update({"_id": ObjectId(room_id)}, edited_room)
+        mongo.db.electricalRooms.update(
+            {"_id": ObjectId(room_id)}, edited_room)
         flash("Electrical room edited successfully.")
         return redirect(url_for("get_rooms"))
     room = mongo.db.electricalRooms.find_one({"_id": ObjectId(room_id)})
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
-    return render_template("edit_room.html", room=room, voltages=voltages, types=types)
+    return render_template(
+        "edit_room.html",
+        room=room,
+        voltages=voltages,
+        types=types)
 
 
 # Delete an electrical room function
