@@ -106,6 +106,18 @@ def logout():
     return redirect(url_for("login"))
 
 
+# Render new survey page
+@app.route("/new_survey")
+def new_survey():
+    return render_template("new-survey.html")
+
+
+# Render new issue page
+@app.route("/new_issue")
+def new_issue():
+    return render_template("new-issue.html")
+
+
 # Manage section
 # Render electrical rooms list page
 @app.route("/get_room_list")
@@ -134,6 +146,7 @@ def edit_room(room_id):
     return render_template("edit_room.html", room=room, voltages=voltages, types=types)
 
 
+# Delete an electrical room function
 @app.route("/delete_room/<room_id>")
 def delete_room(room_id):
     mongo.db.electricalRooms.remove({"_id": ObjectId(room_id)})
@@ -158,6 +171,18 @@ def add_room():
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
     return render_template("addroom.html", voltages=voltages, types=types)
+
+
+# Render survey questions list page
+@app.route("/survey_question_list")
+def survey_question_list():
+    return render_template("survey-question-list.html")
+
+
+# Render user list
+@app.route("/user_list")
+def user_list():
+    return render_template("user-list.html")
 
 
 # Main function

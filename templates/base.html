@@ -21,17 +21,17 @@
         <ul id="dropdown1" class="dropdown-content">
           <li><a href="{{ url_for('get_room_list') }}">DB Room List</a></li>
           <li><a href="{{ url_for('add_room') }}">Add a DB Room</a></li>
-          <li><a href="#!">Survey Questions List</a></li>
+          <li><a href="{{ url_for('survey_question_list') }}">Survey Questions List</a></li>
           <li class="divider"></li>
-          <li><a href="#!">Users</a></li>
+          <li><a href="{{ url_for('user_list') }}">Users</a></li>
         </ul>
         <!-- Copy of #dropdown1-->
         <ul id="dropdown2" class="dropdown-content">
           <li><a href="{{ url_for('get_room_list') }}">DB Room List</a></li>
           <li><a href="{{ url_for('add_room') }}">Add a DB Room</a></li>
-          <li><a href="#!">Survey Questions List</a></li>
+          <li><a href="{{ url_for('survey_question_list') }}">Survey Questions List</a></li>
           <li class="divider"></li>
-          <li><a href="#!">Users</a></li>
+          <li><a href="{{ url_for('user_list') }}">Users</a></li>
         </ul>
         <!-- Main Navigation Structure -->
         <nav class="nav-extended amber accent-4">
@@ -42,8 +42,8 @@
                 <li><a href="{{ url_for('get_overview') }}">Home</a></li>
                 {% if session.user %}
                   <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
-                  <li><a href="#">New Survey</a></li>
-                  <li><a href="#">New Issue</a></li>
+                  <li><a href="{{ url_for('new_survey') }}">New Survey</a></li>
+                  <li><a href="{{ url_for('new_issue') }}">New Issue</a></li>
                   <!-- Dropdown Trigger -->
                   <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Manage</a></li>
                   <li><a href="{{ url_for('logout') }}">Log Out</a></li>
