@@ -1,3 +1,10 @@
+# CODE ATTRIBUTION:
+# The code for this website is based on the excellent Data Centric Design
+# Mini Project Walk-through by Tim Nelson (https://github.com/TravelTimN)
+# of Code Institute. Where custom functionality was required it was 
+# generally based on modifying Tim's original logic to fulfill the
+# project requirements.
+
 import os
 from flask import (
     Flask, flash, render_template, redirect,
