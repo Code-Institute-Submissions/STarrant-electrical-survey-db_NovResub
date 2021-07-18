@@ -133,6 +133,14 @@ def edit_room(room_id):
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
     return render_template("edit_room.html", room=room, voltages=voltages, types=types)
 
+
+@app.route("/delete_room/<room_id>")
+def delete_room(room_id):
+    mongo.db.electricalRooms.remove({"_id": ObjectId(room_id)})
+    flash("Room successfully deleted.")
+    return redirect(url_for("get_rooms"))
+
+
 # Render add electrical room page
 @app.route("/add_room", methods=["GET", "POST"])
 def add_room():
