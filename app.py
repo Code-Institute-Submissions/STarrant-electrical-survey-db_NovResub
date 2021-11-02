@@ -198,18 +198,17 @@ def add_room():
 # Render survey questions list page
 @app.route("/survey_question_list")
 def survey_question_list():
-    reports = list(mongo.db.surveyReport.find_one())
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
-    rooms = list(mongo.db.electricalRooms.find())
-    return render_template("survey-question-list.html", rooms=rooms)
+    return render_template("survey-question-list.html", questions=questions)
+
 
 # Render survey questions list page testhigh to be deleted
 @app.route("/test_page")
 def test_page():
-    reports = list(mongo.db.surveyReport.find_one())
+    # reports = list(mongo.db.surveyReport.find_one())
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     rooms = list(mongo.db.electricalRooms.find())
-    return render_template("testpage.html", rooms=rooms)
+    return render_template("test-page.html", rooms=rooms, questions=questions)
 
 # Render user list
 @app.route("/user_list")
@@ -221,4 +220,4 @@ def user_list():
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)  # testhigh
