@@ -203,6 +203,13 @@ def survey_question_list():
     rooms = list(mongo.db.electricalRooms.find())
     return render_template("survey-question-list.html", rooms=rooms)
 
+# Render survey questions list page testhigh to be deleted
+@app.route("/test_page")
+def test_page():
+    reports = list(mongo.db.surveyReport.find_one())
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    rooms = list(mongo.db.electricalRooms.find())
+    return render_template("testpage.html", rooms=rooms)
 
 # Render user list
 @app.route("/user_list")
