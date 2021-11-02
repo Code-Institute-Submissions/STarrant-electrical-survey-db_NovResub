@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2 class="center-align brown-text text-darken-3 heading-text-shadow">Edit Survey Question Text</h2>
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+    {% for question in questions %}
+        <form class="col s12" method="POST" action="{{ url_for('survey_question_edit', question_id=question._id) }}">
+            <!-- Input Field for Question Short Text -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input value="{{ question.questionShort }}" id="{{ question.questionNumber }}question_short" name="question_short" type="text" class="validate" required>
+                    <label for="question_short">Survey Topic:</label>
+                </div>
+            </div>
+            <!-- Input Field for Question Long -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input value="{{ question.questionLong }}" id="{{ question.questionNumber }}question_long" name="question_long" type="text" class="validate" required>
+                    <label for="question_long">Survey Question:</label>
+                </div>
+            </div>
+            <!-- Cancel and Edit Button -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('survey_question_list') }}" class="btn-large red accent-2">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="btn-large yellow darken-3">
+                        Edit Question <i class="fas fa-edit right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    {% endfor %}
+    <!-- ------------------------------------------------------------------------------------------------------------------ -->
+    
+{% endblock %}
+
+  

@@ -157,7 +157,7 @@ def edit_room(room_id):
         mongo.db.electricalRooms.update(
             {"_id": ObjectId(room_id)}, edited_room)
         flash("Electrical room edited successfully.")
-        return redirect(url_for("get_rooms"))
+        return redirect(url_for("get_room_list"))
     room = mongo.db.electricalRooms.find_one({"_id": ObjectId(room_id)})
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
@@ -173,7 +173,7 @@ def edit_room(room_id):
 def delete_room(room_id):
     mongo.db.electricalRooms.remove({"_id": ObjectId(room_id)})
     flash("Room successfully deleted.")
-    return redirect(url_for("get_rooms"))
+    return redirect(url_for("get_rooms_list"))
 
 
 # Render add electrical room page
@@ -202,7 +202,25 @@ def survey_question_list():
     return render_template("survey-question-list.html", questions=questions)
 
 
-# Render survey questions list page testhigh to be deleted
+# Render survey questions edit page
+@app.route("/survey_question_edit", methods=["GET", "POST"])
+def survey_question_edit(question_id):
+    if request.method == "POST":
+        edited_question = {
+            "questionShort": request.form.get("question_short"),
+            "questionLong": request.form.get("question_long"),
+            "editedBy": session["user"]
+        }
+        mongo.db.surveyQuestions.update(
+            {"_id": ObjectId(question_id)}, edited_question)
+        flash("Survey question edited successfully.")
+        return redirect(url_for("survey_question_list"))
+
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    return render_template("survey-question-edit.html", questions=questions)
+
+
+# Render test page testhigh to be deleted
 @app.route("/test_page")
 def test_page():
     # reports = list(mongo.db.surveyReport.find_one())
