@@ -199,7 +199,7 @@ def add_room():
 @app.route("/survey_question_list")
 def survey_question_list():
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
-    return render_template("survey-question-list.html", questions)
+    return render_template("survey-question-list.html", questions=questions)
 
 
 # Render user list
