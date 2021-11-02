@@ -198,10 +198,10 @@ def add_room():
 # Render survey questions list page
 @app.route("/survey_question_list")
 def survey_question_list():
-    questions = list(mongo.db.surveyQuestions.find_one())
+    reports = list(mongo.db.surveyReport.find())
     # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     # rooms = list(mongo.db.electricalRooms.find())
-    return render_template("survey-question-list.html", questions=questions)
+    return render_template("survey-question-list.html", reports=reports)
 
 
 # Render user list
