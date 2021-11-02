@@ -200,8 +200,8 @@ def add_room():
 def survey_question_list():
     # questions = list(mongo.db.surveyQuestions.find())
     # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
-    rooms = list(mongo.db.electricalRooms.find())
-    return render_template("survey-question-list.html", rooms=rooms)
+    # rooms = list(mongo.db.electricalRooms.find())
+    return render_template("survey-question-list.html")
 
 
 # Render user list
