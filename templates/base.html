@@ -28,6 +28,7 @@
           <li><a href="{{ url_for('get_room_list') }}">DB Room List</a></li>
           <li><a href="{{ url_for('add_room') }}">Add a DB Room</a></li>
           <li><a href="{{ url_for('survey_question_list') }}">Survey Questions List</a></li>
+          <li><a href="{{ url_for('test_page') }}">Test page 1</a></li><!-- testhigh to be deleted -->
           <li class="divider"></li>
           <li><a href="{{ url_for('user_list') }}">Users</a></li>
         </ul>
@@ -36,7 +37,7 @@
           <li><a href="{{ url_for('get_room_list') }}">DB Room List</a></li>
           <li><a href="{{ url_for('add_room') }}">Add a DB Room</a></li>
           <li><a href="{{ url_for('survey_question_list') }}">Survey Questions List</a></li>
-          <li><a href="{{ url_for('test_page') }}">Test page</a></li><!-- testhigh to be deleted -->
+          <li><a href="{{ url_for('test_page') }}">Test page 2</a></li><!-- testhigh to be deleted -->
           <li class="divider"></li>
           <li><a href="{{ url_for('user_list') }}">Users</a></li>
         </ul>
@@ -44,6 +45,7 @@
         <nav class="nav-extended amber accent-4">
             <div class="nav-wrapper">
               <a href="{{ url_for('get_overview') }}" class="brand-logo">Electrical Survey</a>
+              <a href="{{ url_for('test_page') }}">Test page 3</a><!-- testhigh to be deleted -->
               <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars">menu</i></a>
               <ul class="right hide-on-med-and-down">
                 <li><a href="{{ url_for('get_overview') }}">Home</a></li>
@@ -65,6 +67,7 @@
           <ul class="sidenav" id="mobile-demo">
             <li><a href="{{ url_for('get_overview') }}">Home</a></li>
             <li><h4 class="center-align cyan-darken-3 ">Electrical Survey</h4></li>
+            <li><a href="{{ url_for('test_page') }}">Test page 4</a></li><!-- testhigh to be deleted -->
             {% if session.user %}
               <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
               <li><a href="#">New Survey</a></li>
