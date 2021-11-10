@@ -244,9 +244,11 @@ def survey_question_edit(question_id):
 def test_page():
     # reports = list(mongo.db.surveyReport.find_one())
     # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
-    questions = list(mongo.db.surveyQuestions.find())
-    rooms = list(mongo.db.electricalRooms.find())
-    return render_template("test-page.html", rooms=rooms, questions=questions)
+    rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    voltages = list(mongo.db.voltages.find().sort("_id", 1))
+    types = list(mongo.db.roomTypes.find().sort("_id", 1))
+    return render_template("test-page.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
 
 
 # Render user list
