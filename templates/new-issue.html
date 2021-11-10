@@ -4,7 +4,48 @@
   <h2 class="center-align brown-text text-darken-3 heading-text-shadow">New Issue</h2>
 
   <h4 class="center-align red-text">Page Under Construction</h4>
-  
+    
+    <div class="row">
+        <form class="col s12" method="POST" action="#">         <!-- dc url_for('new_issue', room_id=room._id) dc   testhigh  -->
+            <!-- Dropdown Selector for Room -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="room" name="room" class="validate" required>
+                            <!-- Loop through options from MongoDB to generate list. -->
+                            {% for dog in rooms %}
+                                <option value="{{ dog.roomRef }}">{{ dog.roomRef }} -- {{ dog.roomDesc }} -- {{ dog.roomVolts }}  --  {{ dog.roomType }}</option>
+                            {% endfor %}
+                    </select>
+                    <label for="room">Select Room:</label>
+                </div>
+            </div>
+
+            <!-- Display Room Name and Room Voltage for Room Selected -->
+
+
+            <!-- Selector for Questions -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="question" name="question" class="validate" required>
+                            <!-- Loop through options from MongoDB to generate list. -->
+                            {% for cat in questions %}
+                                <option value="{{ cat.questionNumber }}">{{ cat.questionNumber }} -- {{ cat.questionShort }} -- {{ cat.questionLong }}</option>
+                            {% endfor %}
+                    </select>
+                    <label for="question">Select the issue reason:</label>
+                </div>
+            </div>
+
+            <!-- Display Full Text of Question -->
+
+
+
+            <!-- Input Field for Room Designation -->
+
+
+<!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->
+
+
   <form>
     <p>Which room is it in?</p>
 
@@ -18,6 +59,9 @@
 
     <button>Submit</button>
   </form>
+
+  <!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->
+
   <h1>Questions</h1>
   <p>{{ questions }}</p>
 
