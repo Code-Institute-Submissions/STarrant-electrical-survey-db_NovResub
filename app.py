@@ -20,6 +20,7 @@ app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
@@ -128,11 +129,29 @@ def logout():
 def new_survey():
     return render_template("new-survey.html")
 
+#  testhigh ##############################   WORKING IN HERE   #################################################################
 
 # Render new issue page
-@app.route("/new_issue")
+@app.route("/new_issue", methods=["GET", "POST"])
 def new_issue():
-    return render_template("new-issue.html")
+    if request.method == "POST":
+        new_issue = {
+            "roomRef": request.form.get("room_ref"),
+            "roomDesc": request.form.get("room_desc"),
+            "roomVolts": request.form.get("room_volts"),
+            "roomType": request.form.get("room_type"),
+            "createdBy": session["user"]
+        }
+        mongo.db.electricalIssues.insert_one(new_room)
+        flash("New electrical issue raised.")
+        return redirect(url_for("get_overview"))
+    rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    voltages = list(mongo.db.voltages.find().sort("_id", 1))
+    types = list(mongo.db.roomTypes.find().sort("_id", 1))
+    return render_template("new-issue.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
+
+#  testhigh ##############################   WORKING IN HERE   #################################################################
 
 
 # Manage section
@@ -224,9 +243,11 @@ def survey_question_edit(question_id):
 @app.route("/test_page")
 def test_page():
     # reports = list(mongo.db.surveyReport.find_one())
-    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    questions = list(mongo.db.surveyQuestions.find())
     rooms = list(mongo.db.electricalRooms.find())
     return render_template("test-page.html", rooms=rooms, questions=questions)
+
 
 # Render user list
 @app.route("/user_list")
