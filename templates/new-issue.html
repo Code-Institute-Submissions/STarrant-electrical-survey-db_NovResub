@@ -40,9 +40,26 @@
 
 
 
-            <!-- Input Field for Room Designation -->
+            <!-- Input Field for Issue Comments -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input value="" id="issue_comment" name="issue_comment" type="text" class="validate" required>
+                    <label for="issue_comment">Issue Comments:</label>
+                </div>
+            </div>
 
-
+            <!-- Cancel and Submit Button -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('get_overview') }}" class="btn-large red accent-2">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="btn-large yellow darken-3">
+                        Submit Issue <i class="fas fa-edit right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
 <!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->
 
 
@@ -76,4 +93,4 @@
     
 {% endblock %}
 
-  
+<!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->

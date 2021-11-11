@@ -142,7 +142,7 @@ def new_issue():
             "roomType": request.form.get("room_type"),
             "createdBy": session["user"]
         }
-        mongo.db.electricalIssues.insert_one(new_room)
+        mongo.db.surveyIssues.insert_one(new_issue)
         flash("New electrical issue raised.")
         return redirect(url_for("get_overview"))
     rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
