@@ -2,41 +2,89 @@
 {% block content %}
 
 <h2 class="center-align brown-text text-darken-3 heading-text-shadow"> Issues List </h2>
-<!--testhigh-->
-{{rendered_survey_issues}}
-<!--testhigh-->
-
 <ul class="collapsible">
     {% for issue in rendered_survey_issues %}
     <li>
-        <div class="collapsible-header row">
+        <div class="collapsible-header row margin-bottom-0">
             <div class="col s12">
-                <i class="fas fa-caret-down"></i>
-                <strong>{{ issue.roomRef }}</strong> {{ issue.questionShort }} {{ issue.createdAtShort }}
+                <div class="container">
+                    <div class="row margin-0 padding-0">
+                        <div class="col s4"><i class="fas fa-caret-down"></i><strong>{{ issue.roomRef }}</strong></div>
+                        <div class="col s4">{{ issue.questionShort }}</div>
+                        <div class="col s4">{{ issue.createdAtShort }}</div>
+                    </div>
+                </div>
             </div>               
         </div>
-        <div class="collapsible-body">
-            <hr>
-            <p>Location:</p>
-            <p><strong>Room Reference:  </strong>{{ issue.roomRef }}</p>
-            <p><strong>Room Description:  </strong>{{ issue.roomDesc }}</p>
-            <p><strong>Room Type:  </strong>{{ issue.roomType }}</p>
-            <p><strong>Highest Voltage:  </strong>{{ issue.roomVolts }}</p>
-            <hr>
-            <p>Issue Category</p>
-            <p><strong>Ref:  </strong>{{ issue.questionNumber }}</p>
-            <p><strong>Category:  </strong>{{ issue.questionShort }}</p>
-            <p><strong>Full Question:  </strong>{{ issue.questionLong }}</p>
-            <hr>
-            <p>Reported by:</p>
-            <p><strong>Username:  </strong>{{ issue.createdBy }}</p>
-            <p><strong>Full Name:  </strong>{{ issue.createdByFullname }}</p>
-            <p><strong>Company:  </strong>{{ issue.createdByCompany }}</p>
-            <p><strong>Reported Date:  </strong>{{ issue.createdAt }}</p>
-            <p>Issue Comment:</p>
-            <p><strong>Comment:  </strong>{{ issue.issueComment }}</p>
+        <div class="collapsible-body padding-left-30 padding-right-30 padding-top-0 padding-bottom-30">
+            <div class="container">
+                <!-- Location Details -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="col">Location:</div>
+                    </div>
+                <div class="divider container padding-bottom-10"></div>
+                <div class="row container-row">
+                    <div class="col s12 l6"><strong>Room Ref.:  </strong>{{ issue.roomRef }}</div>
+                    <div class="col s12 l6"><strong>Room Desc.:  </strong>{{ issue.roomDesc }}</div>
+                    <div class="col s12 l6"><strong>Room Type:  </strong>{{ issue.roomType }}</div>
+                    <div class="col s12 l6"><strong>Room Volts:  </strong>{{ issue.roomVolts }}</div>
+                </div>
+                <!-- Issue Category -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-swatchbook"></i></div>
+                        <div class="col">Issue Category:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12 m6"><strong>Ref:  </strong>{{ issue.questionNumber }}</div>
+                    <div class="col s12 m6"><strong>Category:  </strong>{{ issue.questionShort }}</div>
+                    <div class="col s12"><strong>Full Question:  </strong>{{ issue.questionLong }}</div>
+                </div>
+                <!-- User Details -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-user"></i></div>
+                        <div class="col">Issue Raised By:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12 m4"><strong>Username:  </strong>{{ issue.createdBy }}</div>
+                    <div class="col s12 m4"><strong>Full Name:  </strong>{{ issue.createdByFullname }}</div>
+                    <div class="col s12 m4"><strong>Company:  </strong>{{ issue.createdByCompany }}</div>
+                </div>
+                <!-- Time Stamp -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="col">Issue Raised On:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12"><strong>Reported Date:  </strong>{{ issue.createdAt }}</div>
+                </div>
+                <!-- Issue Comments -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-quote-right"></i></div>
+                        <div class="col">Issue Comments:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12">{{ issue.issueComment }}</div>
+                </div>
+            </div>
+            <!-- End of Container Div -->
         </div>
+        <!-- End of Callapsible Body -->
     </li>
+    <!-- End of Repeated List Item -->
     {% endfor %}
   </ul>
 
