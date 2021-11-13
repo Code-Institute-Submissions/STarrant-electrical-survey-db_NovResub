@@ -1,96 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
-
-  <h2 class="center-align brown-text text-darken-3 heading-text-shadow">New Issue</h2>
-
-  <h4 class="center-align red-text">Page Under Construction</h4>
-    
-    <div class="row">
-        <form class="col s12" method="POST" action="{{ url_for('new_issue') }}">         <!-- dc url_for('new_issue', room_id=room._id) dc   testhigh  -->
-            <!-- Dropdown Selector for Room -->
-            <div class="row">
-                <div class="input-field col s12">
-                    <select id="room_ref" name="room_ref" class="validate" required>
-                            <!-- Loop through options from MongoDB to generate list. -->
-                            {% for dog in rooms %}
-                                <option value="{{ dog.roomRef }}">{{ dog.roomRef }} -- {{ dog.roomDesc }} -- {{ dog.roomVolts }}  --  {{ dog.roomType }}</option>
-                            {% endfor %}
-                    </select>
-                    <label for="room_ref">Select Room:</label>
+    <h2 class="center-align brown-text text-darken-3 heading-text-shadow">Raise New Issue</h2>
+    <div class="container">
+        <div class="row">
+            <form class="col s12" method="POST" action="{{ url_for('new_issue') }}">
+                <!-- Dropdown Selector for Room -->
+                <div class="container">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="room_ref" name="room_ref" class="validate" required>
+                                    <!-- Loop through options from MongoDB to generate list. -->
+                                    {% for dog in rooms %}
+                                        <option value="{{ dog.roomRef }}">{{ dog.roomRef }} -- {{ dog.roomDesc }}</option>
+                                    {% endfor %}
+                            </select>
+                            <label for="room_ref">Select Room:</label>
+                        </div>
+                    </div>
+                    <!-- Selector for Questions -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="question_no" name="question_no" class="validate" required>
+                                    <!-- Loop through options from MongoDB to generate list. -->
+                                    {% for cat in questions %}
+                                        <option value="{{ cat.questionNumber }}">{{ cat.questionNumber }} -- {{ cat.questionShort }} -- {{ cat.questionLong }}</option>
+                                    {% endfor %}
+                            </select>
+                            <label for="question_no">Select the issue reason:</label>
+                        </div>
+                    </div>
+                    <!-- Input Field for Issue Comments -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea value="" id="issue_comment" name="issue_comment" type="text" class="materialize-textarea validate" required></textarea>
+                                <label for="issue_comment">Issue Comments:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cancel and Submit Buttons -->
+                    <div class="row">
+                        <div class="col s12 center-align">
+                            <a href="{{ url_for('get_overview') }}" class="btn-large red accent-2">
+                                Cancel <i class="fas fa-times-circle right"></i>
+                            </a>
+                            <button type="submit" class="btn-large yellow darken-3">
+                                Submit Issue <i class="fas fa-edit right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- End of Cancel and Submit Buttons -->
                 </div>
-            </div>
-
-            <!-- Display Room Name and Room Voltage for Room Selected -->
-
-
-            <!-- Selector for Questions -->
-            <div class="row">
-                <div class="input-field col s12">
-                    <select id="question_no" name="question_no" class="validate" required>
-                            <!-- Loop through options from MongoDB to generate list. -->
-                            {% for cat in questions %}
-                                <option value="{{ cat.questionNumber }}">{{ cat.questionNumber }} -- {{ cat.questionShort }} -- {{ cat.questionLong }}</option>
-                            {% endfor %}
-                    </select>
-                    <label for="question_no">Select the issue reason:</label>
-                </div>
-            </div>
-
-            <!-- Display Full Text of Question -->
-
-
-
-            <!-- Input Field for Issue Comments -->
-            <div class="row">
-                <div class="input-field col s12">
-                    <input value="" id="issue_comment" name="issue_comment" type="text" class="validate" required>
-                    <label for="issue_comment">Issue Comments:</label>
-                </div>
-            </div>
-
-            <!-- Cancel and Submit Button -->
-            <div class="row">
-                <div class="col s12 center-align">
-                    <a href="{{ url_for('get_overview') }}" class="btn-large red accent-2">
-                        Cancel <i class="fas fa-times-circle right"></i>
-                    </a>
-                    <button type="submit" class="btn-large yellow darken-3">
-                        Submit Issue <i class="fas fa-edit right"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-<!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->
-
-
-  <form>
-    <p>Which room is it in?</p>
-
-
-    <p>What is the issue?</p>
-
-
-    <p>Is a fail?</p>
-
-    <p>Comment</p>
-
-    <button>Submit</button>
-  </form>
-
-  <!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->
-
-  <h1>Questions</h1>
-  <p>{{ questions }}</p>
-
-  <h1>Rooms</h1>
-  <p>{{ rooms }}</p>
-
-  <h1>Voltages</h1>
-  <p>{{ voltages }}</p>
-
-  <h1>Types</h1>
-  <p>{{ types }}</p>
-    
+                <!-- End of Container -->
+            </form>
+            <!-- End Form -->
+        </div>
+        <!-- End Row -->
+    </div>
+     <!-- End Container -->
 {% endblock %}
-
-<!--   CODE BLOCK---------------------------------------------------------------------------------------------------- -->
