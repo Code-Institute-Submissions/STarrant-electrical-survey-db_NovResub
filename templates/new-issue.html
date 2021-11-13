@@ -6,17 +6,17 @@
   <h4 class="center-align red-text">Page Under Construction</h4>
     
     <div class="row">
-        <form class="col s12" method="POST" action="#">         <!-- dc url_for('new_issue', room_id=room._id) dc   testhigh  -->
+        <form class="col s12" method="POST" action="{{ url_for('new_issue') }}">         <!-- dc url_for('new_issue', room_id=room._id) dc   testhigh  -->
             <!-- Dropdown Selector for Room -->
             <div class="row">
                 <div class="input-field col s12">
-                    <select id="room" name="room" class="validate" required>
+                    <select id="room_ref" name="room_ref" class="validate" required>
                             <!-- Loop through options from MongoDB to generate list. -->
                             {% for dog in rooms %}
                                 <option value="{{ dog.roomRef }}">{{ dog.roomRef }} -- {{ dog.roomDesc }} -- {{ dog.roomVolts }}  --  {{ dog.roomType }}</option>
                             {% endfor %}
                     </select>
-                    <label for="room">Select Room:</label>
+                    <label for="room_ref">Select Room:</label>
                 </div>
             </div>
 
@@ -26,13 +26,13 @@
             <!-- Selector for Questions -->
             <div class="row">
                 <div class="input-field col s12">
-                    <select id="question" name="question" class="validate" required>
+                    <select id="question_no" name="question_no" class="validate" required>
                             <!-- Loop through options from MongoDB to generate list. -->
                             {% for cat in questions %}
                                 <option value="{{ cat.questionNumber }}">{{ cat.questionNumber }} -- {{ cat.questionShort }} -- {{ cat.questionLong }}</option>
                             {% endfor %}
                     </select>
-                    <label for="question">Select the issue reason:</label>
+                    <label for="question_no">Select the issue reason:</label>
                 </div>
             </div>
 

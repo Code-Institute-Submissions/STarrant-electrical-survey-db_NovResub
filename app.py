@@ -137,9 +137,8 @@ def new_issue():
     if request.method == "POST":
         new_issue = {
             "roomRef": request.form.get("room_ref"),
-            "roomDesc": request.form.get("room_desc"),
-            "roomVolts": request.form.get("room_volts"),
-            "roomType": request.form.get("room_type"),
+            "questionNumber": request.form.get("question_no"),
+            "issueComment": request.form.get("issue_comment"),
             "createdBy": session["user"]
         }
         mongo.db.surveyIssues.insert_one(new_issue)
