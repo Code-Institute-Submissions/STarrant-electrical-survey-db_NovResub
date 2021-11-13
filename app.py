@@ -245,11 +245,12 @@ def test_page():
     # reports = list(mongo.db.surveyReport.find_one())
     # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     now = datetime.datetime.now()
+    date_time_string = now.strftime("%A, %d. %B %Y %I:%M%p")
     rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
-    return render_template("test-page.html", now=now, rooms=rooms, questions=questions, voltages=voltages, types=types)
+    return render_template("test-page.html", now=now, date_time_string=date_time_string, rooms=rooms, questions=questions, voltages=voltages, types=types)
 
 
 # Render user list
