@@ -246,11 +246,57 @@ def test_page():
     # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     now = datetime.datetime.now()
     date_time_string = now.strftime("%A, %d. %B %Y %I:%M%p")
+    # testing code here for renedering survey issues testhigh------------------------------------------------
+    
+    # Query MongoDB for Survey Issues and turn it into a list.
+    survey_issues = list(mongo.db.surveyIssues.find().sort("_id", 1))
+    # Create a new list for holding the fully rendered issues to be sent to html.
+    rendered_survey_issues = []
+    # Loop through Mongo DB's returned list.
+    for budgie in survey_issues:
+        room_ref = budgie['roomRef']
+        # Look up electricalRooms collection to get room type, description and voltage.
+        room_dictionary = mongo.db.electricalRooms.find_one({"roomRef": room_ref})
+        room_type = room_dictionary['roomType']
+        room_desc = room_dictionary['roomDesc']
+        room_volts = room_dictionary['roomVolts']
+        # Look up surveyQuestions collection to get full question texts.
+        question_no = budgie['questionNumber']
+        question_dictionary = mongo.db.surveyQuestions.find_one({"questionNumber": question_no})
+        question_short = question_dictionary['questionShort']
+        question_long = question_dictionary['questionLong']
+        # Get the comment added by the surveyor.
+        issue_comment = budgie['issueComment']
+        # Look up user collections to get the surveyor's full name and company 
+        created_by = budgie['createdBy']
+        created_by_dictionary = mongo.db.users.find_one({"username": created_by})
+        created_by_fullname = created_by_dictionary['first_name'] + " " + created_by_dictionary['last_name']
+        created_by_company = created_by_dictionary['company']
+        # Convert date time stamp to full text formatting.
+        created_at = budgie['createdAt'].strftime("%A, %d. %B %Y %I:%M%p")
+        # Pack all values into a dictionary and append it to the
+        # rendered_survey_issues list.
+        issue = {
+            'roomRef': room_ref,
+            'roomType': room_type,
+            'roomDesc': room_desc,
+            'roomVolts': room_volts,
+            'questionNumber': question_no,
+            'questionShort': question_short,
+            'questionLong': question_long,
+            'issueComment': issue_comment,
+            'createdBy': created_by,
+            'createdByFullname': created_by_fullname,
+            'createdByCompany': created_by_company,
+            'createdAt': created_at,
+        }
+        rendered_survey_issues.append(issue)
+    # end testing code here testhigh ------------------------------------------
     rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
-    return render_template("test-page.html", now=now, date_time_string=date_time_string, rooms=rooms, questions=questions, voltages=voltages, types=types)
+    return render_template("test-page.html", rendered_survey_issues=rendered_survey_issues,survey_issues=survey_issues, now=now, date_time_string=date_time_string, rooms=rooms, questions=questions, voltages=voltages, types=types)
 
 
 # Render user list
