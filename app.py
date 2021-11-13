@@ -5,7 +5,7 @@
 # generally based on modifying Tim's original logic to fulfill the
 # project requirements.
 
-import os
+import os, datetime
 from flask import (
     Flask, flash, render_template, redirect,
     request, session, url_for)
@@ -135,11 +135,13 @@ def new_survey():
 @app.route("/new_issue", methods=["GET", "POST"])
 def new_issue():
     if request.method == "POST":
+        #created_at = mongo.db.DateTimeField(default=datetime.now())
         new_issue = {
             "roomRef": request.form.get("room_ref"),
             "questionNumber": request.form.get("question_no"),
             "issueComment": request.form.get("issue_comment"),
-            "createdBy": session["user"]
+            "createdBy": session["user"],
+            "createdAt": created_at
         }
         mongo.db.surveyIssues.insert_one(new_issue)
         flash("New electrical issue raised.")
@@ -243,11 +245,12 @@ def survey_question_edit(question_id):
 def test_page():
     # reports = list(mongo.db.surveyReport.find_one())
     # questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    now = datetime.datetime.now()
     rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
-    return render_template("test-page.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
+    return render_template("test-page.html", now=now, rooms=rooms, questions=questions, voltages=voltages, types=types)
 
 
 # Render user list
