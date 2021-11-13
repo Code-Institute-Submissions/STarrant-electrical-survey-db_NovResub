@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="center-align brown-text text-darken-3 heading-text-shadow"> Issues List </h2>
+<!--testhigh-->
+{{rendered_survey_issues}}
+<!--testhigh-->
+
+<ul class="collapsible">
+    {% for issue in rendered_survey_issues %}
+    <li>
+        <div class="collapsible-header row">
+            <div class="col s12">
+                <i class="fas fa-caret-down"></i>
+                <strong>{{ issue.roomRef }}</strong> {{ issue.questionShort }} {{ issue.createdAtShort }}
+            </div>               
+        </div>
+        <div class="collapsible-body">
+            <hr>
+            <p>Location:</p>
+            <p><strong>Room Reference:  </strong>{{ issue.roomRef }}</p>
+            <p><strong>Room Description:  </strong>{{ issue.roomDesc }}</p>
+            <p><strong>Room Type:  </strong>{{ issue.roomType }}</p>
+            <p><strong>Highest Voltage:  </strong>{{ issue.roomVolts }}</p>
+            <hr>
+            <p>Issue Category</p>
+            <p><strong>Ref:  </strong>{{ issue.questionNumber }}</p>
+            <p><strong>Category:  </strong>{{ issue.questionShort }}</p>
+            <p><strong>Full Question:  </strong>{{ issue.questionLong }}</p>
+            <hr>
+            <p>Reported by:</p>
+            <p><strong>Username:  </strong>{{ issue.createdBy }}</p>
+            <p><strong>Full Name:  </strong>{{ issue.createdByFullname }}</p>
+            <p><strong>Company:  </strong>{{ issue.createdByCompany }}</p>
+            <p><strong>Reported Date:  </strong>{{ issue.createdAt }}</p>
+            <p>Issue Comment:</p>
+            <p><strong>Comment:  </strong>{{ issue.issueComment }}</p>
+        </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
