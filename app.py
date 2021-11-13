@@ -135,13 +135,12 @@ def new_survey():
 @app.route("/new_issue", methods=["GET", "POST"])
 def new_issue():
     if request.method == "POST":
-        #created_at = mongo.db.DateTimeField(default=datetime.now())
         new_issue = {
             "roomRef": request.form.get("room_ref"),
             "questionNumber": request.form.get("question_no"),
             "issueComment": request.form.get("issue_comment"),
             "createdBy": session["user"],
-            "createdAt": created_at
+            "createdAt": datetime.datetime.now(),
         }
         mongo.db.surveyIssues.insert_one(new_issue)
         flash("New electrical issue raised.")
