@@ -164,6 +164,50 @@ def new_survey():
 
 
 
+# Render survey list page
+@app.route("/survey_list")
+def survey_list():
+    # Query MongoDB for Survey Reports and turn it into a list.
+    survey_reports = list(mongo.db.surveyReports.find().sort("_id", 1))
+    # Create a new list for holding the fully rendered issues to be sent to html.
+    rendered_survey_reports = []
+    # Loop through Mongo DB's returned list.
+    for parrot in survey_reports:
+        room_ref = parrot['roomRef']
+        # Look up electricalRooms collection to get room type, description and voltage.
+        room_dictionary = mongo.db.electricalRooms.find_one({"roomRef": room_ref})
+        room_type = room_dictionary['roomType']
+        room_desc = room_dictionary['roomDesc']
+        room_volts = room_dictionary['roomVolts']
+        # Get the comment added by the surveyor.
+        survey_comment = parrot['surveyComment']
+        # Look up user collection to get the surveyor's full name and company.
+        created_by = parrot['createdBy']
+        created_by_dictionary = mongo.db.users.find_one({"username": created_by})
+        created_by_fullname = created_by_dictionary['first_name'] + " " + created_by_dictionary['last_name']
+        created_by_company = created_by_dictionary['company']
+        # Convert date time stamp to full text formatting.
+        created_at = parrot['createdAt'].strftime("%A, %d. %B %Y %I:%M%p")
+        created_at_short = parrot['createdAt'].strftime("%d/%m/%y")
+        # Pack all values into a dictionary and append it to the
+        # rendered_survey_issues list.
+        report = {
+            'roomRef': room_ref,
+            'roomType': room_type,
+            'roomDesc': room_desc,
+            'roomVolts': room_volts,
+            'surveyComment': survey_comment,
+            'createdBy': created_by,
+            'createdByFullname': created_by_fullname,
+            'createdByCompany': created_by_company,
+            'createdAt': created_at,
+            'createdAtShort': created_at_short,
+        }
+        rendered_survey_reports.append(report)
+    return render_template("survey-list.html", rendered_survey_reports=rendered_survey_reports)
+
+
+
 #  testhigh ##############################   WORKING IN HERE   #################################################################
 
 # Render new issue page
@@ -234,7 +278,7 @@ def issue_list():
             'createdAtShort': created_at_short,
         }
         rendered_survey_issues.append(issue)
-    return render_template("issue_list.html", rendered_survey_issues=rendered_survey_issues)
+    return render_template("issue-list.html", rendered_survey_issues=rendered_survey_issues)
 
 
 # Manage section
