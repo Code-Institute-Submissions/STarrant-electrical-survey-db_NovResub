@@ -131,16 +131,28 @@ def logout():
 @app.route("/new_survey", methods=["GET", "POST"])
 def new_survey():
     if request.method == "POST":
+        # Retreive the room ref, comments, who and when data from the page.
+        # Store these in a dictionary.
         new_report = {
             "roomRef": request.form.get("room_ref"),
             "surveyComment": request.form.get("survey_comment"),
             "createdBy": session["user"],
             "createdAt": datetime.datetime.now(),
         }
+        # Get the list of questions from Mongo.
         questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+        # Loop through the list of questions to pull each answer.
         for question in questions:
-            new_answer = request.form.get("answer_"+question["questionNumber"])
-            new_report["answer_"+str(question): "answer_"+str(new_answer)]
+            # Grab the question number, e.g. "1_01"
+            question_no = question["questionNumber"]
+            # Create the answer name, e.g. "answer_1_01"
+            answer_id = "answer_" + str(question_no)
+            # Retreive this answer name from the POST data.
+            new_answer = request.form.get(answer_id)
+            # Append this to the report dictionary.
+            new_report[answer_id] = new_answer
+            # Repeat loop through all questions.
+        # Insert this dictionary into the DB as a new survey report
         mongo.db.surveyReports.insert_one(new_report)
         flash("New electrical report submitted.")
         return redirect(url_for("get_overview"))
