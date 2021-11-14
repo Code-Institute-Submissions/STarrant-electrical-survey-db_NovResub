@@ -36,6 +36,32 @@ div .container {
     margin: 0;
 }
 
+/* Pass, Fail, N/C, N/A Colorings for survey questions */
+/* Overrides Materialize's CSS classes. */
+
+span.span-pass,
+span.span-fail,
+span.span-nc,
+span.span-na {
+    color: #555;
+}
+ 
+[type="radio"]:checked+span.span-fail:after, [type="radio"].with-gap:checked+span.span-fail:after {
+    background-color: red;
+    border: 2px solid red;
+}
+
+[type="radio"]:checked+span.span-nc:after, [type="radio"].with-gap:checked+span.span-nc:after {
+    background-color: orange;
+    border: 2px solid orange;
+}
+
+[type="radio"]:checked+span.span-na:after, [type="radio"].with-gap:checked+span.span-na:after {
+    background-color: #555;
+    border: 2px solid #555;
+}
+
+
 /* Materialize Margin Helper Classes */
 
 .margin-auto {margin:               auto!important;}
