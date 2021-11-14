@@ -26,6 +26,29 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+# CODE CREDIT https://newbedev.com/accessing-python-dict-values-with-the-key-start-characters
+
+
+def value_by_key_prefix(d, partial):
+    matches = [val for key, val in d.items() if key.startswith(partial)]
+    if not matches:
+        raise KeyError(partial)
+    # if len(matches) > 1:
+    #    raise ValueError('{} matches more than one key'.format(partial))
+    return matches[0]
+
+
+def key_prefixes(d, partial):
+    matches = [key for key, val in d.items() if key.startswith(partial)]
+    if not matches:
+        raise KeyError(partial)
+    # if len(matches) > 1:
+    #    raise ValueError('{} matches more than one key'.format(partial))
+    return matches
+
+
+# END CODE CREDIT
+
 # Render main page
 @app.route("/")
 @app.route("/get_overview")
@@ -171,6 +194,7 @@ def survey_list():
     survey_reports = list(mongo.db.surveyReports.find().sort("_id", 1))
     # Create a new list for holding the fully rendered issues to be sent to html.
     rendered_survey_reports = []
+    test_variable = []
     # Loop through Mongo DB's returned list.
     for parrot in survey_reports:
         room_ref = parrot['roomRef']
@@ -189,6 +213,22 @@ def survey_list():
         # Convert date time stamp to full text formatting.
         created_at = parrot['createdAt'].strftime("%A, %d. %B %Y %I:%M%p")
         created_at_short = parrot['createdAt'].strftime("%d/%m/%y")
+        answer_list = []
+        answer_keys = key_prefixes(parrot, "answer_")
+        for key in answer_keys:
+            answer_no = key
+            answer_value = parrot[answer_no]
+            question_no = answer_no[-4:]
+            question_dictionary = mongo.db.surveyQuestions.find_one({"questionNumber": question_no})
+            question_short = question_dictionary['questionShort']
+            question_long = question_dictionary['questionLong']
+            new_answer = {
+                "questionNumber": question_no,
+                "questionShort": question_short,
+                "questionLong": question_long,
+                "answerValue": answer_value,
+            }
+            answer_list.append(new_answer)
         # Pack all values into a dictionary and append it to the
         # rendered_survey_issues list.
         report = {
@@ -202,9 +242,10 @@ def survey_list():
             'createdByCompany': created_by_company,
             'createdAt': created_at,
             'createdAtShort': created_at_short,
+            'answerList': answer_list,
         }
         rendered_survey_reports.append(report)
-    return render_template("survey-list.html", rendered_survey_reports=rendered_survey_reports)
+    return render_template("survey-list.html", answer_list=answer_list, rendered_survey_reports=rendered_survey_reports, survey_reports=survey_reports, test_variable=test_variable)
 
 
 
