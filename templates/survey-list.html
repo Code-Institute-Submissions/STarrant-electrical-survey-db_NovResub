@@ -2,20 +2,11 @@
 {% block content %}
 
 <h2 class="center-align brown-text text-darken-3 heading-text-shadow"> Reports List </h2>
-<!-- ------------------   testhigh   -----------------------   -->
-<hr>
-<h3>rendered survey reports</h3>
-{{ rendered_survey_reports }}
-<h3>answer list</h3>
-
-{{ answerlist }}
-<hr>
-<!-- ------------------   testhigh   -----------------------   -->
 <ul class="collapsible">
     {% for dog in rendered_survey_reports %}
     <li>
         <!-- Collapsible Header Elements -->
-        <div class="collapsible-header row margin-bottom-0">
+        <div class="collapsible-header row margin-bottom-0 bg-lightyellow">
             <div class="col s12">
                 <div class="container">
                     <div class="row margin-0 padding-0">
@@ -76,6 +67,38 @@
                 <div class="divider padding-bottom-10"></div>
                 <div class="row">
                     <div class="col s12">{{ dog.surveyComment }}</div>
+                </div>
+                <!-- SurveyAnswer List -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="col">Survey Answers:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12">
+                        {% for answer in dog.answerList %}
+                            <div class="margin-bottom-0 container">
+                                <div class="row">
+                                    <div class="col s2 margin-0"><p><strong>{{ answer.questionNumber }}</strong></p></div>
+                                    <div class="col s8 margin-0"><p>{{ answer.questionShort }}  |  {{ answer.questionLong }}</p></div>
+                                    <div class="col s2 right-align margin-0">
+                                        {% if answer.answerValue == "Pass" %}
+                                            <p class="margin-0 text-right">Pass-<i class="fas fa-circle text-green"></i></p>
+                                        {% elif answer.answerValue == "Fail" %}
+                                            <p class="margin-0 text-right">Fail-<i class="fas fa-circle text-red"></i></p>
+                                        {% elif answer.answerValue == "NC" %}
+                                            <p class="margin-0 text-right">Not Checked-<i class="fas fa-circle text-orange"></i></p>
+                                        {% elif answer.answerValue == "NA" %}
+                                            <p class="margin-0 text-right">N/A-<i class="fas fa-circle text-grey"></i></p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <!-- End of Container Div -->
