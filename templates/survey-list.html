@@ -6,13 +6,42 @@
     {% for dog in rendered_survey_reports %}
     <li>
         <!-- Collapsible Header Elements -->
-        <div class="collapsible-header row margin-bottom-0 bg-lightyellow">
-            <div class="col s12">
+        <div class="collapsible-header row margin-bottom-0 padding-right-0 padding-left-0 bg-lightyellow">
+            <div class="col s12 padding-right-0 padding-left-0">
                 <div class="container">
                     <div class="row margin-0 padding-0">
-                        <div class="col s4"><i class="fas fa-caret-down"></i><strong>{{ dog.roomRef }}</strong></div>
-                        <div class="col s4"><strong>{{ dog.roomDesc }}</strong></div>
-                        <div class="col s4">Survey Date: {{ dog.createdAtShort }}</div>
+                        <div class="col s4 m2"><i class="fas fa-caret-down"></i><strong>{{ dog.roomRef }}</strong></div>
+                        <div class="col hide-on-small-only m4"><strong>{{ dog.roomDesc }}</strong></div>
+                        <div class="col s8 m6 padding-0">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col s4 padding-0">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </div>
+                                    <div class="col s4 padding-0">
+                                        <!-- Count of Pass Items -->
+                                        <span><i class="fas fa-circle text-green fa-xs"></i>{{ dog.countPass }}</span>
+                                    </div>
+                                    <div class="col s4 padding-0">
+                                        <!-- Count of Fail Items -->
+                                        <span><i class="fas fa-circle text-red fa-sm"></i>{{ dog.countFail }}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s4 padding-0">
+                                        {{ dog.createdAtShort }}
+                                    </div>
+                                    <div class="col s4 padding-0">
+                                        <!-- Count of N/C Items -->
+                                        <span><i class="fas fa-circle text-orange fa-lg"></i>{{ dog.countNC }}</span>
+                                    </div>
+                                    <div class="col s4 padding-0">
+                                        <!-- Count of N/A Items -->
+                                        <span><i class="fas fa-circle text-grey"></i>{{ dog.countNA }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>               

@@ -214,10 +214,22 @@ def survey_list():
         created_at = parrot['createdAt'].strftime("%A, %d. %B %Y %I:%M%p")
         created_at_short = parrot['createdAt'].strftime("%d/%m/%y")
         answer_list = []
+        count_pass = 0
+        count_fail = 0
+        count_nc = 0
+        count_na = 0
         answer_keys = key_prefixes(parrot, "answer_")
         for key in answer_keys:
             answer_no = key
             answer_value = parrot[answer_no]
+            if answer_value == "Pass":
+                count_pass = count_pass + 1
+            elif answer_value == "Fail":
+                count_fail = count_fail + 1
+            elif answer_value == "NC":
+                count_nc = count_nc + 1
+            elif answer_value == "NA":
+                count_na = count_na + 1
             question_no = answer_no[-4:]
             question_dictionary = mongo.db.surveyQuestions.find_one({"questionNumber": question_no})
             question_short = question_dictionary['questionShort']
@@ -243,6 +255,10 @@ def survey_list():
             'createdAt': created_at,
             'createdAtShort': created_at_short,
             'answerList': answer_list,
+            'countPass': count_pass,
+            'countFail': count_fail,
+            'countNC': count_nc,
+            'countNA': count_na,
         }
         rendered_survey_reports.append(report)
     return render_template("survey-list.html", answer_list=answer_list, rendered_survey_reports=rendered_survey_reports, survey_reports=survey_reports, test_variable=test_variable)
@@ -275,7 +291,7 @@ def new_issue():
 @app.route("/issue_list")
 def issue_list():
     # Query MongoDB for Survey Issues and turn it into a list.
-    survey_issues = list(mongo.db.surveyIssues.find().sort("_id", 1))
+    survey_issues = list(mongo.db.surveyIssues.find().sort("_id", -1))
     # Create a new list for holding the fully rendered issues to be sent to html.
     rendered_survey_issues = []
     # Loop through Mongo DB's returned list.
