@@ -124,10 +124,30 @@ def logout():
     return redirect(url_for("login"))
 
 
+#  testhigh ##############################   WORKING IN HERE   #################################################################
+
+
 # Render new survey page
-@app.route("/new_survey")
+@app.route("/new_survey", methods=["GET", "POST"])
 def new_survey():
-    return render_template("new-survey.html")
+    if request.method == "POST":
+        new_report = {
+            "roomRef": request.form.get("room_ref"),
+            "issueComment": request.form.get("survey_comment"),
+            "createdBy": session["user"],
+            "createdAt": datetime.datetime.now(),
+
+        }
+        mongo.db.surveyReports.insert_one(new_report)
+        flash("New electrical report submitted.")
+        return redirect(url_for("get_overview"))
+    rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    voltages = list(mongo.db.voltages.find().sort("_id", 1))
+    types = list(mongo.db.roomTypes.find().sort("_id", 1))
+    return render_template("new-survey.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
+
+
 
 #  testhigh ##############################   WORKING IN HERE   #################################################################
 
@@ -200,8 +220,6 @@ def issue_list():
         }
         rendered_survey_issues.append(issue)
     return render_template("issue_list.html", rendered_survey_issues=rendered_survey_issues)
-
-#  testhigh ##############################   WORKING IN HERE   #################################################################
 
 
 # Manage section
