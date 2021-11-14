@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="center-align brown-text text-darken-3 heading-text-shadow"> Reports List </h2>
+<!-- ------------------   testhigh   -----------------------   -->
+<hr>
+{{ rendered_survey_reports }}
+<hr>
+<!-- ------------------   testhigh   -----------------------   -->
+<ul class="collapsible">
+    {% for dog in rendered_survey_reports %}
+    <li>
+        <!-- Collapsible Header Elements -->
+        <div class="collapsible-header row margin-bottom-0">
+            <div class="col s12">
+                <div class="container">
+                    <div class="row margin-0 padding-0">
+                        <div class="col s4"><i class="fas fa-caret-down"></i><strong>{{ dog.roomRef }}</strong></div>
+                        <div class="col s4"><strong>{{ dog.roomDesc }}</strong></div>
+                        <div class="col s4">Survey Date: {{ dog.createdAtShort }}</div>
+                    </div>
+                </div>
+            </div>               
+        </div>
+        <!-- Colapsible Body Elements -->
+        <div class="collapsible-body padding-left-30 padding-right-30 padding-top-0 padding-bottom-30">
+            <div class="container">
+                <!-- Location Details -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="col">Location:</div>
+                    </div>
+                <div class="divider container padding-bottom-10"></div>
+                <div class="row container-row">
+                    <div class="col s12 l6"><strong>Room Ref.:  </strong>{{ dog.roomRef }}</div>
+                    <div class="col s12 l6"><strong>Room Desc.:  </strong>{{ dog.roomDesc }}</div>
+                    <div class="col s12 l6"><strong>Room Type:  </strong>{{ dog.roomType }}</div>
+                    <div class="col s12 l6"><strong>Room Volts:  </strong>{{ dog.roomVolts }}</div>
+                </div>
+                <!-- User Details -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-user"></i></div>
+                        <div class="col">Survey By:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12 m4"><strong>Username:  </strong>{{ dog.createdBy }}</div>
+                    <div class="col s12 m4"><strong>Full Name:  </strong>{{ dog.createdByFullname }}</div>
+                    <div class="col s12 m4"><strong>Company:  </strong>{{ dog.createdByCompany }}</div>
+                </div>
+                <!-- Time Stamp -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="col">Survey Completed On:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12"><strong>Reported Date:  </strong>{{ dog.createdAt }}</div>
+                </div>
+                <!-- Issue Comments -->
+                <div class="section-header container padding-top-20">
+                    <div class="row margin-0 padding-0">
+                        <div class="col"><i class="fas fa-quote-right"></i></div>
+                        <div class="col">Survey Comments:</div>
+                    </div>
+                </div>
+                <div class="divider padding-bottom-10"></div>
+                <div class="row">
+                    <div class="col s12">{{ dog.surveyComment }}</div>
+                </div>
+            </div>
+            <!-- End of Container Div -->
+        </div>
+        <!-- End of Callapsible Body -->
+    </li>
+    <!-- End of Repeated List Item -->
+    {% endfor %}
+</ul>
+
+{% endblock content %}
