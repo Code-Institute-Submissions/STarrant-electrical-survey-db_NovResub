@@ -133,11 +133,14 @@ def new_survey():
     if request.method == "POST":
         new_report = {
             "roomRef": request.form.get("room_ref"),
-            "issueComment": request.form.get("survey_comment"),
+            "surveyComment": request.form.get("survey_comment"),
             "createdBy": session["user"],
             "createdAt": datetime.datetime.now(),
-
         }
+        questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+        for question in questions:
+            new_answer = request.form.get("answer_"+question["questionNumber"])
+            new_report["answer_"+str(question): "answer_"+str(new_answer)]
         mongo.db.surveyReports.insert_one(new_report)
         flash("New electrical report submitted.")
         return redirect(url_for("get_overview"))
