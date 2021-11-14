@@ -61,6 +61,18 @@ span.span-na {
     border: 2px solid #555;
 }
 
+/* Text colors for survey results display */
+.text-green { color: #26A69A; }
+.text-red { color: red; }
+.text-orange { color: orange; }
+.text-grey { color: #555; }
+
+/* Background for collapsible headers */
+.bg-lightyellow {
+    background-color: palegoldenrod;
+    border-color: peru;
+}
+
 
 /* Materialize Margin Helper Classes */
 
