@@ -27,7 +27,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
-# CODE CREDIT https://newbedev.com/accessing-python-dict-values-with-the-key-start-characters
+# CODE CREDIT https://newbedev.com/accessing-python-dict-values-with-the-key-start-characters # noqa
 
 
 def value_by_key_prefix(dictionary, partial):
@@ -46,15 +46,19 @@ def value_by_key_prefix(dictionary, partial):
 
 
 def key_prefixes(dictionary, partial):
-    matches = [key for key, val in dictionary.items() if key.startswith(partial)]
+    """
+    Function to search a dictionary with partial key
+    and return all matching keys.
+    """
+    matches = [key for key,
+               val in dictionary.items()
+               if key.startswith(partial)]
     if not matches:
         raise KeyError(partial)
-    # if len(matches) > 1:
-    #    raise ValueError('{} matches more than one key'.format(partial))
     return matches
 
-
 # END CODE CREDIT
+
 
 @app.route("/")
 def get_overview():
@@ -65,9 +69,11 @@ def get_overview():
     return render_template("overview.html", rooms=rooms)
 
 
-# Render registration page
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """
+    Render the registration page.
+    """
     if request.method == "POST":
         # Check if username already exists in database.
         existing_user = mongo.db.users.find_one(
@@ -94,9 +100,11 @@ def register():
     return render_template("register.html")
 
 
-# Render login page
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """
+    Render the login page.
+    """
     if request.method == "POST":
         # check if username exists in db
         existing_user = mongo.db.users.find_one(
@@ -123,21 +131,22 @@ def login():
     return render_template("login.html")
 
 
-
-
-# Logout function
 @app.route("/logout")
 def logout():
-    # remove session from cookies
+    """
+    Logout function.
+    Remove user session from cookies.
+    """
     flash("You've been safely logged out.")
     session.pop("user")
     return redirect(url_for("login"))
 
 
-
-# Render user profile page
 @app.route("/profile/<username>", methods=["GET", "POST"])
-def profile(username):
+def profile(user):
+    """
+    Render the user profile page.
+    """
     user = mongo.db.users.find_one(
         {"username": session["user"]})
 
@@ -149,12 +158,11 @@ def profile(username):
     return redirect(url_for("login"))
 
 
-#  testhigh ##############################   WORKING IN HERE   #################################################################
-
-
-# Render new survey page
 @app.route("/survey/new", methods=["GET", "POST"])
 def new_survey():
+    """
+    Render the new survey page.
+    """
     if request.method == "POST":
         # Retreive the room ref, comments, who and when data from the page.
         # Store these in a dictionary.
@@ -186,22 +194,24 @@ def new_survey():
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
     return render_template("new-survey.html", rooms=rooms, questions=questions,
-        voltages=voltages, types=types)
+                           voltages=voltages, types=types)
 
 
-# Render survey list page
 @app.route("/survey_list")
 def survey_list():
+    """
+    Render the survey list page.
+    """
     # Query MongoDB for Survey Reports and turn it into a list.
     survey_reports = list(mongo.db.surveyReports.find().sort("_id", 1))
     # Create a new list for holding the fully rendered issues to be sent to html.
     rendered_survey_reports = []
-    test_variable = []
     # Loop through Mongo DB's returned list.
     for parrot in survey_reports:
         room_ref = parrot['roomRef']
         # Look up electricalRooms collection to get room type, description and voltage.
-        room_dictionary = mongo.db.electricalRooms.find_one({"roomRef": room_ref})
+        room_dictionary = mongo.db.electricalRooms.find_one(
+                                {"roomRef": room_ref})
         room_type = room_dictionary['roomType']
         room_desc = room_dictionary['roomDesc']
         room_volts = room_dictionary['roomVolts']
@@ -209,8 +219,10 @@ def survey_list():
         survey_comment = parrot['surveyComment']
         # Look up user collection to get the surveyor's full name and company.
         created_by = parrot['createdBy']
-        created_by_dictionary = mongo.db.users.find_one({"username": created_by})
-        created_by_fullname = created_by_dictionary['first_name'] + " " + created_by_dictionary['last_name']
+        created_by_dictionary = mongo.db.users.find_one(
+                                {"username": created_by})
+        created_by_fullname = (created_by_dictionary['first_name']
+                               + " " + created_by_dictionary['last_name'])
         created_by_company = created_by_dictionary['company']
         # Convert date time stamp to full text formatting.
         created_at = parrot['createdAt'].strftime("%A, %d. %B %Y %I:%M%p")
@@ -233,7 +245,8 @@ def survey_list():
             elif answer_value == "NA":
                 count_na = count_na + 1
             question_no = answer_no[-4:]
-            question_dictionary = mongo.db.surveyQuestions.find_one({"questionNumber": question_no})
+            question_dictionary = mongo.db.surveyQuestions.find_one(
+                                    {"questionNumber": question_no})
             question_short = question_dictionary['questionShort']
             question_long = question_dictionary['questionLong']
             new_answer = {
@@ -263,12 +276,15 @@ def survey_list():
             'countNA': count_na,
         }
         rendered_survey_reports.append(report)
-    return render_template("survey-list.html", answer_list=answer_list, rendered_survey_reports=rendered_survey_reports, survey_reports=survey_reports, test_variable=test_variable)
+    return render_template("survey-list.html",
+                           rendered_survey_reports=rendered_survey_reports,)
 
 
-# Render new issue page
 @app.route("/issue/new", methods=["GET", "POST"])
 def new_issue():
+    """
+    Render New Issue Page
+    """
     if request.method == "POST":
         issue = {
             "roomRef": request.form.get("room_ref"),
@@ -284,11 +300,18 @@ def new_issue():
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
-    return render_template("new-issue.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
+    return render_template("new-issue.html",
+                           rooms=rooms,
+                           questions=questions,
+                           voltages=voltages,
+                           types=types)
 
-# Render issues list page
+
 @app.route("/issues")
 def issue_list():
+    """
+    Render issues list page.
+    """
     # Query MongoDB for Survey Issues and turn it into a list.
     survey_issues = list(mongo.db.surveyIssues.find().sort("_id", -1))
     # Create a new list for holding the fully rendered issues to be sent to html.
@@ -297,21 +320,25 @@ def issue_list():
     for budgie in survey_issues:
         room_ref = budgie['roomRef']
         # Look up electricalRooms collection to get room type, description and voltage.
-        room_dictionary = mongo.db.electricalRooms.find_one({"roomRef": room_ref})
+        room_dictionary = mongo.db.electricalRooms.find_one(
+                            {"roomRef": room_ref})
         room_type = room_dictionary['roomType']
         room_desc = room_dictionary['roomDesc']
         room_volts = room_dictionary['roomVolts']
         # Look up surveyQuestions collection to get full question texts.
         question_no = budgie['questionNumber']
-        question_dictionary = mongo.db.surveyQuestions.find_one({"questionNumber": question_no})
+        question_dictionary = mongo.db.surveyQuestions.find_one(
+                            {"questionNumber": question_no})
         question_short = question_dictionary['questionShort']
         question_long = question_dictionary['questionLong']
         # Get the comment added by the surveyor.
         issue_comment = budgie['issueComment']
-        # Look up user collections to get the surveyor's full name and company 
+        # Look up user collections to get the surveyor's full name and company
         created_by = budgie['createdBy']
-        created_by_dictionary = mongo.db.users.find_one({"username": created_by})
-        created_by_fullname = created_by_dictionary['first_name'] + " " + created_by_dictionary['last_name']
+        created_by_dictionary = mongo.db.users.find_one(
+                                    {"username": created_by})
+        created_by_fullname = (created_by_dictionary['first_name']
+                               + " " + created_by_dictionary['last_name'])
         created_by_company = created_by_dictionary['company']
         # Convert date time stamp to full text formatting.
         created_at = budgie['createdAt'].strftime("%A, %d. %B %Y %I:%M%p")
@@ -334,20 +361,27 @@ def issue_list():
             'createdAtShort': created_at_short,
         }
         rendered_survey_issues.append(issue)
-    return render_template("issue-list.html", rendered_survey_issues=rendered_survey_issues)
+    return render_template("issue-list.html",
+                           rendered_survey_issues=rendered_survey_issues)
 
 
 # Manage section
-# Render electrical rooms list page
+
+
 @app.route("/get_room_list")
 def get_room_list():
+    """
+    Render the electrical rooms list.
+    """
     rooms = list(mongo.db.electricalRooms.find())
     return render_template("room-list.html", rooms=rooms)
 
 
-# Edit an individual electrical room's details
 @app.route("/edit_room/<room_id>", methods=["GET", "POST"])
 def edit_room(room_id):
+    """
+    Render the page to edit an individual electrical room's details.
+    """
     if request.method == "POST":
         edited_room = {
             "roomRef": request.form.get("room_ref"),
@@ -370,17 +404,21 @@ def edit_room(room_id):
         types=types)
 
 
-# Delete an electrical room function
 @app.route("/delete_room/<room_id>")
 def delete_room(room_id):
+    """
+    Delete an electrical room function
+    """
     mongo.db.electricalRooms.remove({"_id": ObjectId(room_id)})
     flash("Room successfully deleted.")
     return redirect(url_for("get_rooms_list"))
 
 
-# Render add electrical room page
 @app.route("/add_room", methods=["GET", "POST"])
 def add_room():
+    """
+    Add an electrical room function.
+    """
     if request.method == "POST":
         new_room = {
             "roomRef": request.form.get("room_ref"),
@@ -397,16 +435,20 @@ def add_room():
     return render_template("addroom.html", voltages=voltages, types=types)
 
 
-# Render survey questions list page
 @app.route("/survey_question_list")
 def survey_question_list():
+    """
+    Render survey questions list page
+    """
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     return render_template("survey-question-list.html", questions=questions)
 
 
-# Render survey questions edit page
 @app.route("/survey_question_edit", methods=["GET", "POST"])
 def survey_question_edit(question_id):
+    """
+    Render survey questions edit page
+    """
     if request.method == "POST":
         edited_question = {
             "questionShort": request.form.get("question_short"),
@@ -484,11 +526,12 @@ def test_page():
     return render_template("test-page.html", rendered_survey_issues=rendered_survey_issues,survey_issues=survey_issues, now=now, date_time_string=date_time_string, rooms=rooms, questions=questions, voltages=voltages, types=types)
 
 
-# Render user list
 @app.route("/user_list")
 def user_list():
+    """
+    Render the user list.
+    """
     return render_template("user-list.html")
-
 
 
 # Main function
