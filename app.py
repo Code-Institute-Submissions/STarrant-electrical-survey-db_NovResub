@@ -197,7 +197,7 @@ def new_survey():
                            voltages=voltages, types=types)
 
 
-@app.route("/survey_list")
+@app.route("/surveys")
 def survey_list():
     """
     Render the survey list page.
