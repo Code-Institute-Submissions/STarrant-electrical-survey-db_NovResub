@@ -143,7 +143,7 @@ def logout():
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
-def profile(user):
+def profile(username):
     """
     Render the user profile page.
     """
@@ -318,6 +318,7 @@ def issue_list():
     rendered_survey_issues = []
     # Loop through Mongo DB's returned list.
     for budgie in survey_issues:
+        issue_id = budgie['_id']
         room_ref = budgie['roomRef']
         # Look up electricalRooms collection to get room type, description and voltage.
         room_dictionary = mongo.db.electricalRooms.find_one(
@@ -346,6 +347,7 @@ def issue_list():
         # Pack all values into a dictionary and append it to the
         # rendered_survey_issues list.
         issue = {
+            '_id': issue_id,
             'roomRef': room_ref,
             'roomType': room_type,
             'roomDesc': room_desc,
@@ -364,6 +366,24 @@ def issue_list():
     return render_template("issue-list.html",
                            rendered_survey_issues=rendered_survey_issues)
 
+
+@app.route("/delete_issue/<issue_id>")
+def delete_issue(issue_id):
+    """
+    Delete an electrical issue function
+    """
+    mongo.db.surveyIssues.remove({"_id": ObjectId(issue_id)})
+    flash("Issue successfully deleted.")
+    return redirect(url_for("issue_list"))
+
+
+@app.route("/edit_issue/<issue_id>")
+def edit_issue(issue_id):
+    """
+    Edit an electrical issue function
+    """
+    flash("testhigh.")  # testhigh
+    return redirect(url_for("issue_list"))
 
 # Manage section
 
