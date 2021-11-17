@@ -1,5 +1,15 @@
-body {
+/* body {
     width: 100%;
+} */
+
+body {
+    background: url('/static/images/markus-spiske-kK7uPfb2YWU-unsplash-2-whiten.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 64px);
+    width: 100%;
+    color: #293132;
+    margin: var(--top-spacing) auto;
 }
 
 .flashes h4 {
