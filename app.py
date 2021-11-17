@@ -5,7 +5,8 @@
 # generally based on modifying Tim's original logic to fulfill the
 # project requirements.
 
-import os, datetime
+import os
+import datetime
 from flask import (
     Flask, flash, render_template, redirect,
     request, session, url_for)
@@ -29,17 +30,23 @@ mongo = PyMongo(app)
 # CODE CREDIT https://newbedev.com/accessing-python-dict-values-with-the-key-start-characters
 
 
-def value_by_key_prefix(d, partial):
-    matches = [val for key, val in d.items() if key.startswith(partial)]
+def value_by_key_prefix(dictionary, partial):
+    """
+    Function to search a dictionary with partial key
+    and return the first match.
+    """
+    matches = [val for key,
+               val in dictionary.items()
+               if key.startswith(partial)]
     if not matches:
         raise KeyError(partial)
-    # if len(matches) > 1:
-    #    raise ValueError('{} matches more than one key'.format(partial))
+    if len(matches) > 1:
+        raise ValueError('{} matches more than one key'.format(partial))
     return matches[0]
 
 
-def key_prefixes(d, partial):
-    matches = [key for key, val in d.items() if key.startswith(partial)]
+def key_prefixes(dictionary, partial):
+    matches = [key for key, val in dictionary.items() if key.startswith(partial)]
     if not matches:
         raise KeyError(partial)
     # if len(matches) > 1:
@@ -49,10 +56,11 @@ def key_prefixes(d, partial):
 
 # END CODE CREDIT
 
-# Render main page
 @app.route("/")
-@app.route("/get_overview")
 def get_overview():
+    """
+    Render main page
+    """
     rooms = list(mongo.db.electricalRooms.find())
     return render_template("overview.html", rooms=rooms)
 
@@ -115,27 +123,6 @@ def login():
     return render_template("login.html")
 
 
-# Render user profile page
-@app.route("/profile/<username>", methods=["GET", "POST"])
-def profile(username):
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    first_name = mongo.db.users.find_one(
-        {"username": session["user"]})["first_name"]
-    last_name = mongo.db.users.find_one(
-        {"username": session["user"]})["last_name"]
-    company = mongo.db.users.find_one(
-        {"username": session["user"]})["company"]
-
-    if session["user"]:
-        return render_template(
-            "profile.html",
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
-            company=company)
-
-    return redirect(url_for("login"))
 
 
 # Logout function
@@ -147,11 +134,26 @@ def logout():
     return redirect(url_for("login"))
 
 
+
+# Render user profile page
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    user = mongo.db.users.find_one(
+        {"username": session["user"]})
+
+    if session["user"]:
+        return render_template(
+            "profile.html",
+            user=user)
+
+    return redirect(url_for("login"))
+
+
 #  testhigh ##############################   WORKING IN HERE   #################################################################
 
 
 # Render new survey page
-@app.route("/new_survey", methods=["GET", "POST"])
+@app.route("/survey/new", methods=["GET", "POST"])
 def new_survey():
     if request.method == "POST":
         # Retreive the room ref, comments, who and when data from the page.
@@ -183,8 +185,8 @@ def new_survey():
     questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     voltages = list(mongo.db.voltages.find().sort("_id", 1))
     types = list(mongo.db.roomTypes.find().sort("_id", 1))
-    return render_template("new-survey.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
-
+    return render_template("new-survey.html", rooms=rooms, questions=questions,
+        voltages=voltages, types=types)
 
 
 # Render survey list page
@@ -264,21 +266,18 @@ def survey_list():
     return render_template("survey-list.html", answer_list=answer_list, rendered_survey_reports=rendered_survey_reports, survey_reports=survey_reports, test_variable=test_variable)
 
 
-
-#  testhigh ##############################   WORKING IN HERE   #################################################################
-
 # Render new issue page
-@app.route("/new_issue", methods=["GET", "POST"])
+@app.route("/issue/new", methods=["GET", "POST"])
 def new_issue():
     if request.method == "POST":
-        new_issue = {
+        issue = {
             "roomRef": request.form.get("room_ref"),
             "questionNumber": request.form.get("question_no"),
             "issueComment": request.form.get("issue_comment"),
             "createdBy": session["user"],
             "createdAt": datetime.datetime.now(),
         }
-        mongo.db.surveyIssues.insert_one(new_issue)
+        mongo.db.surveyIssues.insert_one(issue)
         flash("New electrical issue raised.")
         return redirect(url_for("get_overview"))
     rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
@@ -288,7 +287,7 @@ def new_issue():
     return render_template("new-issue.html", rooms=rooms, questions=questions, voltages=voltages, types=types)
 
 # Render issues list page
-@app.route("/issue_list")
+@app.route("/issues")
 def issue_list():
     # Query MongoDB for Survey Issues and turn it into a list.
     survey_issues = list(mongo.db.surveyIssues.find().sort("_id", -1))
@@ -491,8 +490,9 @@ def user_list():
     return render_template("user-list.html")
 
 
+
 # Main function
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)  # testhigh
+            debug=os.environ.get("DEBUG"))
