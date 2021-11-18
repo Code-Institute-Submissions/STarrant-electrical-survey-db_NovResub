@@ -208,6 +208,7 @@ def survey_list():
     rendered_survey_reports = []
     # Loop through Mongo DB's returned list.
     for parrot in survey_reports:
+        survey_id = parrot['_id']
         room_ref = parrot['roomRef']
         # Look up electricalRooms collection to get room type, description and voltage.
         room_dictionary = mongo.db.electricalRooms.find_one(
@@ -259,6 +260,7 @@ def survey_list():
         # Pack all values into a dictionary and append it to the
         # rendered_survey_issues list.
         report = {
+            '_id': survey_id,
             'roomRef': room_ref,
             'roomType': room_type,
             'roomDesc': room_desc,
@@ -278,6 +280,59 @@ def survey_list():
         rendered_survey_reports.append(report)
     return render_template("survey-list.html",
                            rendered_survey_reports=rendered_survey_reports,)
+
+
+@app.route("/delete_survey/<survey_id>")
+def delete_survey(survey_id):
+    """
+    Delete an electrical survey function
+    """
+    mongo.db.surveyReport.remove({"_id": ObjectId(survey_id)})
+    flash("Survey successfully deleted.")
+    return redirect(url_for("survey_list"))
+
+
+@app.route("/edit_survey/<survey_id>", methods=['GET', 'POST'])
+def edit_survey(survey_id):
+    """
+    Edit an electrical survey function
+    """
+    if request.method == "POST":
+        # Retreive the room ref, comments, who and when data from the page.
+        # Store these in a dictionary.
+        edited_survey = {
+            "roomRef": request.form.get("room_ref"),
+            "surveyComment": request.form.get("survey_comment"),
+            "createdBy": session["user"],
+            "createdAt": datetime.datetime.now(),
+        }
+        # Get the list of questions from Mongo.
+        questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+        # Loop through the list of questions to pull each answer.
+        for question in questions:
+            # Grab the question number, e.g. "1_01"
+            question_no = question["questionNumber"]
+            # Create the answer name, e.g. "answer_1_01"
+            answer_id = "answer_" + str(question_no)
+            # Retreive this answer name from the POST data.
+            new_answer = request.form.get(answer_id)
+            # Append this to the report dictionary.
+            edited_survey[answer_id] = new_answer
+            # Repeat loop through all questions.
+        # Insert this dictionary into the DB as an editted survey report
+        mongo.db.surveyReports.update(
+            {"_id": ObjectId(survey_id)}, edited_survey)
+        flash("New survey report updated successfully.")
+        return redirect(url_for("survey_list"))
+    rooms = list(
+            mongo.db.electricalRooms.find().sort("_id", 1))
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    survey = mongo.db.surveyReports.find_one({"_id": ObjectId(survey_id)})
+    return render_template(
+        "edit-survey.html",
+        rooms=rooms,
+        questions=questions,
+        survey=survey)
 
 
 @app.route("/issue/new", methods=["GET", "POST"])
