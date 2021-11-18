@@ -65,7 +65,6 @@
           <ul class="sidenav" id="mobile-demo">
             <li><a href="{{ url_for('get_overview') }}">Home</a></li>
             <li><h4 class="center-align cyan-darken-3 ">Electrical Survey</h4></li>
-            <li><a href="{{ url_for('test_page') }}">Test page 4</a></li><!-- testhigh to be deleted -->
             {% if session.user %}
               <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
               <li><a href="#">New Survey</a></li>
