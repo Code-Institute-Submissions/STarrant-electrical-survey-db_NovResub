@@ -287,7 +287,7 @@ def delete_survey(survey_id):
     """
     Delete an electrical survey function
     """
-    mongo.db.surveyReport.remove({"_id": ObjectId(survey_id)})
+    mongo.db.surveyReports.remove({"_id": ObjectId(survey_id)})
     flash("Survey successfully deleted.")
     return redirect(url_for("survey_list"))
 
@@ -326,12 +326,27 @@ def edit_survey(survey_id):
         return redirect(url_for("survey_list"))
     rooms = list(
             mongo.db.electricalRooms.find().sort("_id", 1))
-    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
     survey = mongo.db.surveyReports.find_one({"_id": ObjectId(survey_id)})
+    questions_answers = []
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    for question in questions:
+        question_no = question["questionNumber"]
+        # Create the answer name, e.g. "answer_1_01"
+        answer_id = "answer_" + str(question_no)
+        # Retreive this answer name from the POST data.
+        answer = survey[answer_id]
+        # Append this to the report dictionary.
+        new_question_answer = {
+            "questionNumber": question["questionNumber"],
+            "questionShort": question["questionShort"],
+            "questionLong": question["questionLong"],
+            "answerValue": answer,
+        }
+        questions_answers.append(new_question_answer)
     return render_template(
         "edit-survey.html",
         rooms=rooms,
-        questions=questions,
+        questions_answers=questions_answers,
         survey=survey)
 
 

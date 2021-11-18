@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <!-- Loop Creating for Questions -->
-                {% for fox in questions %}
+                {% for fox in questions_answers %}
                 <div class="row">
                     <!-- Question Number Column on Left -->
                     <div class="col s2"><Strong>{{ fox.questionNumber }}</Strong></div>
@@ -33,24 +33,37 @@
                                 <!-- Question Long Form -->
                                 <div class="col">
                                     {{ fox.questionLong }}
+                                    {{ fox.answerValue }}
                                 </div>
                             </div>
                             <div class="row margin-bottom-10 paddng-bottom-50">
                                 <div class="col">
-                                    {% if "answer_"+fox.questionNumber == "Pass" %}
-                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}"  name="answer_{{ fox.questionNumber }}" value="Pass" selected/><span class="span-pass">Pass</span></label>
+                                    {% if fox.answerValue == "Pass" %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}"  name="answer_{{ fox.questionNumber }}" value="Pass" checked/><span class="span-pass">Pass</span></label>
                                     {% else %}
                                     <label><input type="radio" id="answer_{{ fox.questionNumber }}"  name="answer_{{ fox.questionNumber }}" value="Pass"/><span class="span-pass">Pass</span></label>
                                     {% endif %}
                                 </div>
                                 <div class="col">
-                                    <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="Fail"/><span class="span-fail">Fail</span></label>
+                                    {% if fox.answerValue == "Fail" %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="Fail" checked/><span class="span-fail">Fail</span></label>
+                                    {% else %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="Fail"/><span class="span-fail">Fail</span></label>
+                                    {% endif %}
                                 </div>
                                 <div class="col">
-                                    <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="NC"/><span  class="span-nc">Not Checked</span></label>
+                                    {% if fox.answerValue == "NC" %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="NC" checked/><span  class="span-nc">Not Checked</span></label>
+                                    {% else %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="NC"/><span  class="span-nc">Not Checked</span></label>
+                                    {% endif %}
                                 </div>
                                 <div class="col">
-                                    <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="NA"/><span class="span-na">Not Applicable</span></label>
+                                    {% if fox.answerValue == "NA" %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="NA" checked/><span class="span-na">Not Applicable</span></label>
+                                    {% else %}
+                                        <label><input type="radio" id="answer_{{ fox.questionNumber }}" name="answer_{{ fox.questionNumber }}" value="NA"/><span class="span-na">Not Applicable</span></label>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -61,7 +74,7 @@
                 <!-- Input Field for Issue Comments -->
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea value="" id="survey_comment" name="survey_comment" type="text" class="materialize-textarea"></textarea>
+                        <textarea value="" id="survey_comment" name="survey_comment" type="text" class="materialize-textarea">{{ survey.surveyComment }}</textarea>
                         <label for="Survey_comment">Survey Comments:</label>
                     </div>
                 </div>
