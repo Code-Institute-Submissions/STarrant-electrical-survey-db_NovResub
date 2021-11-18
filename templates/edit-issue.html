@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2 class="center-align brown-text text-darken-3 heading-text-shadow">Edit an Issue</h2>
+    <div class="container">
+        <div class="row">
+            <form class="col s12" method="POST" action="{{ url_for('edit_issue', issue_id=issue._id) }}">
+                <!-- Dropdown Selector for Room -->
+                <div class="container">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="room_ref" name="room_ref" class="validate" required>
+                                <!-- Loop through options from MongoDB to generate list. -->
+                                {% for dog in rooms %}
+                                    {% if dog.roomRef == issue.roomRef %}
+                                    <option value="{{ dog.roomRef }}" selected>{{ dog.roomRef }} -- {{ dog.roomDesc }}</option>
+                                    {% else %}
+                                    <option value="{{ dog.roomRef }}">{{ dog.roomRef }} -- {{ dog.roomDesc }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <label for="room_ref">Change Room:</label>
+                        </div>
+                    </div>
+                    <!-- Selector for Questions -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="question_no" name="question_no" class="validate" required>
+                                <!-- Loop through options from MongoDB to generate list. -->
+                                {% for cat in questions %}
+                                    <!-- Check if option passed into rendered page matches DB. If so, set this as selected. -->
+                                    {% if cat.questionNumber == issue.questionNumber %}
+                                    <option value="{{ cat.questionNumber }}" selected>{{ cat.questionNumber }} -- {{ cat.questionShort }} -- {{ cat.questionLong }}</option>
+                                    {% else %}
+                                    <option value="{{ cat.questionNumber }}">{{ cat.questionNumber }} -- {{ cat.questionShort }} -- {{ cat.questionLong }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <label for="question_no">Change the issue reason:</label>
+                        </div>
+                    </div>
+                    <!-- Input Field for Issue Comments -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea value="" id="issue_comment" name="issue_comment" type="text" class="materialize-textarea validate" required>{{ issue.issueComment }}</textarea>
+                                <label for="issue_comment">Change the Issue Comments:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cancel and Submit Buttons -->
+                    <div class="row">
+                        <div class="col s12 center-align">
+                            <a href="{{ url_for('issue_list') }}" class="btn-large red accent-2">
+                                Cancel <i class="fas fa-times-circle right"></i>
+                            </a>
+                            <button type="submit" class="btn-large yellow darken-3">
+                                Update Issue <i class="fas fa-edit right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- End of Cancel and Submit Buttons -->
+                </div>
+                <!-- End of Container -->
+            </form>
+            <!-- End Form -->
+        </div>
+        <!-- End Row -->
+    </div>
+     <!-- End Container -->
+{% endblock %}

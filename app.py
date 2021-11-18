@@ -377,13 +377,32 @@ def delete_issue(issue_id):
     return redirect(url_for("issue_list"))
 
 
-@app.route("/edit_issue/<issue_id>")
+@app.route("/edit_issue/<issue_id>", methods=['GET', 'POST'])
 def edit_issue(issue_id):
     """
     Edit an electrical issue function
     """
-    flash("testhigh.")  # testhigh
-    return redirect(url_for("issue_list"))
+    if request.method == "POST":
+        edited_issue = {
+            "roomRef": request.form.get("room_ref"),
+            "questionNumber": request.form.get("question_no"),
+            "issueComment": request.form.get("issue_comment"),
+            "createdBy": session["user"],
+            "createdAt": datetime.datetime.now(),
+        }
+        mongo.db.surveyIssues.update(
+            {"_id": ObjectId(issue_id)}, edited_issue)
+        flash("Issue updated successfully.")
+        return redirect(url_for("issue_list"))
+    rooms = list(mongo.db.electricalRooms.find().sort("_id", 1))
+    questions = list(mongo.db.surveyQuestions.find().sort("_id", 1))
+    issue = mongo.db.surveyIssues.find_one({"_id": ObjectId(issue_id)})
+    return render_template(
+        "edit-issue.html",
+        rooms=rooms,
+        questions=questions,
+        issue=issue)
+
 
 # Manage section
 
