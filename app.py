@@ -204,13 +204,13 @@ def survey_list():
     """
     # Query MongoDB for Survey Reports and turn it into a list.
     survey_reports = list(mongo.db.surveyReports.find().sort("_id", 1))
-    # Create a new list for holding the fully rendered issues to be sent to html.
+    # Create a new list for holding the issues to be sent to html.
     rendered_survey_reports = []
     # Loop through Mongo DB's returned list.
     for parrot in survey_reports:
         survey_id = parrot['_id']
         room_ref = parrot['roomRef']
-        # Look up electricalRooms collection to get room type, description and voltage.
+        # Look up electricalRooms collection to get room information.
         room_dictionary = mongo.db.electricalRooms.find_one(
                                 {"roomRef": room_ref})
         room_type = room_dictionary['roomType']
@@ -384,13 +384,13 @@ def issue_list():
     """
     # Query MongoDB for Survey Issues and turn it into a list.
     survey_issues = list(mongo.db.surveyIssues.find().sort("_id", -1))
-    # Create a new list for holding the fully rendered issues to be sent to html.
+    # Create a new list for holding the issues to be sent to html.
     rendered_survey_issues = []
     # Loop through Mongo DB's returned list.
     for budgie in survey_issues:
         issue_id = budgie['_id']
         room_ref = budgie['roomRef']
-        # Look up electricalRooms collection to get room type, description and voltage.
+        # Look up electricalRooms collection to get room data points.
         room_dictionary = mongo.db.electricalRooms.find_one(
                             {"roomRef": room_ref})
         room_type = room_dictionary['roomType']
@@ -578,7 +578,8 @@ def user_list():
     """
     Render the user list.
     """
-    return render_template("user-list.html")
+    users = list(mongo.db.users.find().sort("_id", 1))
+    return render_template("user-list.html", users=users)
 
 
 # Main function
