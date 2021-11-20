@@ -91,6 +91,10 @@
 
 In terms of design, the standard materialize fonts and color schemes were used for the sake of simplicity. An amber-yellow color scheme was chosen to reflect the relevance of this site to safety with these colors being synonymous with ISO7010 warning signage.
 
+A simple database schema was developed in MS Excel to track the interaction between various collections.
+
+![Database Schema](wireframes/schema.png)
+
 #### Fonts
 
 * [Materialize Typography](https://materializecss.com/typography.html) has been used throughout the site. With legibilty and ease of eye strain being a key focus for site users, the standard Materialize fonts are excellent.
@@ -152,6 +156,7 @@ The website colors were chosen using [Materialize Colors](https://materializecss
 * List of users on the site with edit and delete possible for admin users.
 * Possibility to mark items as completed.
 * Add links to photos for each item.
+* Much better data summaries and aggregation required.
 
 
 ## Technologies Used
@@ -167,6 +172,7 @@ The website colors were chosen using [Materialize Colors](https://materializecss
 
 ### Tools & Libraries
 
+* [Flask](https://flask.palletsprojects.com/en/2.0.x/)
 * [Git](https://git-scm.com/)
 * [Bootstrap](https://getbootstrap.com/)
 * [Popper](https://popper.js.org/)
@@ -188,7 +194,7 @@ The website colors were chosen using [Materialize Colors](https://materializecss
 
 ### HTML Test
 
-HTML code has been tested using the [HTML Validator](https://validator.w3.org/) and gave the following error:
+HTML code has been tested using the [HTML Validator](https://validator.w3.org/) and gave a huge number of errors due to Jinja templating
 
 #### HTML Test Errors
 
@@ -196,7 +202,7 @@ HTML code has been tested using the [HTML Validator](https://validator.w3.org/) 
 
 #### HTML Test Fixes
 
-* N/A
+* All HTML error fixes minor, made good during developement and documented in commit messages where appropriate.
 
 ### CSS Test
 
@@ -233,7 +239,7 @@ CSS code has been tested using the [CSS validator](http://jigsaw.w3.org/css-vali
 
 #### Python Test Errors
 
-* Python errors were fixed using Gitpods built in linter to reduce error down to the single remaining error relating to env.py.
+* Python errors were fixed using Gitpods built in linter to reduce error down to the two remaining errors relating to env.py and a 'username' argument being unsued in the Profile function.
 * Most python issues were minor and relating to PEP8 compliance.
 
 #### Python Test Warnings
@@ -308,6 +314,24 @@ CSS code has been tested using the [CSS validator](http://jigsaw.w3.org/css-vali
 ### Design
 
 * The idea for doing this project came from an Excel sheet that I had developed as part of my dayjob as an electrical engineer. I work in a very large industrial plant with over 80 electrical switchrooms so I developed a survey system to check for electrical issues across the site. A hard-copy survey sheet is filled out on paper and manually typed into Excel at the end of the survey run. The system works very well but is hugely labourious. The goal of this project is to use state-of-the-art web technology to make this a seamless process.
+
+* The Excel based version started as printed sheets taken into the field by the surveyor.
+
+![Concept-1](/wireframes/concept-1.png)
+
+* The return sheets were manually typed in to the spreadsheet to get a summary of point for each room on site.
+
+![Concept-2](/wireframes/concept-2.png)
+
+* This data is used to generate a bar graph representation of pass/fail stats for each issue.
+
+![Concept-3](/wireframes/concept-3.png)
+
+* This data is then in turn used to create a summary map of the various issues. A drop down selector allows the user to pick a category of issue and the rooms where there is a failure are indicated red on the map and a table of the relevant issue comments is presented on the right hand side.
+
+![Concept-4](/wireframes/concept-4.png)
+
+* Although beyond the scope of this project, there is the potential to develop this system further to make a viable engineering tool.
 
 
 ### User Stories
@@ -395,15 +419,11 @@ Many bugs were encountered during the development of the project - all admittedl
 
 ### Development Bugs
 
-* Bug 1
-* Bug 2
-* Bug 3
-* Bug 4
-* Bug 5
+* Most of the development bugs arrose due to lack of familiarity with jinja templating, the Flask framework and the complexity of this project's requirement to generate automatic name and id fields for the survey's questions and loop back again to find the submitted answer tags.
 
 ### Testing Bugs
 
-* A few bugs were thrown up during development and generally centered around getting .
+* During the testing many minor bugs were found and dealt with through the commit messages. No major design flaws or package issues found which would merit inclusion.
 
 ## Deployment
 
@@ -415,6 +435,7 @@ The site has been deployed on [Heroku](https://www.heroku.com/) with under the f
 
 ---
 
+* [Marcus Spiske](https://unsplash.com/@markusspiske)'s [image](https://unsplash.com/photos/kK7uPfb2YWU) is used as a background on all screens. Image free for use under [Unsplash licence](https://unsplash.com/license).
 * [JSHint.com](https://jshint.com/) was used to error check the JavaScript code.
 * [Markdown guide basic syntax](https://www.markdownguide.org/basic-syntax/) was used as a reference in writing the README.md file.
 * [Markdownlint](https://dlaa.me/markdownlint/) by [David Anson](https://github.com/DavidAnson) was used for correcting the errors in my markdown. It is an awesome resource and saved me hours of correction time.
