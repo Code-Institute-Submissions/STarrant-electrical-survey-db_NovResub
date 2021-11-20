@@ -57,6 +57,7 @@
                 </ul>
             </div>
         </nav>
+
         <ul class="sidenav" id="mobile-demo">
             <li><a href="{{ url_for('get_overview') }}">Home</a></li>
             <li>
@@ -74,7 +75,9 @@
             <li><a href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
         </ul>
+
     </header>
+
     <section>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -86,9 +89,9 @@
         {% endif %}
         {% endwith %}
     </section>
+
     <main class="container">
         {% block content %}
-
         {% endblock %}
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
