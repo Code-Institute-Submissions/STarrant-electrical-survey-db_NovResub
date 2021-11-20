@@ -36,9 +36,9 @@
 ### User Goals
 
 * User registration available to sign up as a site-user.
-* View, add, modify and delete electrical rooms from the survey.
-* View, add, modify and delete survey questions from the site.
-* Create individual issue notifications.
+* View and add electrical rooms to the survey.
+* View, add, modify and delete survey reports from the site.
+* View, add, modify and delete individual issue notifications.
 * Get an overview of the status of all the surveyed rooms.
 
 ### User Stories
@@ -47,8 +47,6 @@
 * As a **user**, I want to be able to use a mobile device to carry out a survey. (e.g. A tablet or mobile phone)
 * As a **user**, I want to be able to view a list of the electrical rooms.
 * As a **user**, I want to be able to add a new electrical room to the survey.
-* As a **user**, I want to be able to modify an electrical room's details.
-* As a **user**, I want to be able to delete an electrical room from the survey.
 * As a **user**, I want to be able to carry out an electrical survey of a room and save the data to the site.
 * As a **user**, I want to be able view the results of surveys carried out.
 * As a **user**, I want to be able see an overview of current issues.
@@ -95,16 +93,23 @@ The website colors were chosen using [Materialize Colors](https://materializecss
 ## Wireframing
 
 <details>
-  <summary>Wireframing was done using Balsamiq under full-functional trial provided by Code Institute.
-Wireframes were developed for an add room screen as this was the only element of the project successfully implemented.
-Other aspects of the design developed more organically.
-NOTE TO CORRECTOR: OTHER WIREFRAMES SHOULD HAVE BEEN DEVELOPED FOR OTHER SCREENS.
+  <summary>Wireframing was done using Balsamiq under full-functional trial provided by Code Institute. Wireframes were only created for the more complicated screens. Smaller screens were created organically. 
+
 </summary>
 
 ### Project Wireframes
 
-* Add a room screen
-* ![Add a room screen wireframe](/wireframes/wf_add_room_screen.png)
+* Main Landind Screen
+![Main Landing Page](wireframes/wf-main-landing-page.png)
+
+* Add a Room Screen
+![Add a room screen wireframe](/wireframes/wf_add_room_screen.png)
+
+* Add a new survey report screen
+![Add a new survey report](wireframes/wf-survey-questions.png)
+
+* Add a new issue screen
+![Survey Issue](wireframes/wf-survey-issue.png)
 
 </details>
 
@@ -118,18 +123,22 @@ NOTE TO CORRECTOR: OTHER WIREFRAMES SHOULD HAVE BEEN DEVELOPED FOR OTHER SCREENS
 * User authentication with log in and logout functions available.
 * User profile page with username, First Name, Surname and Company name available.
 * List of DB rooms is available with each of the details available in collapsible elements.
-* Create, update and delete possible to rooms and their details.
+* Only create and view functionality is possible for rooms at the moment.
+* Create, view, update and delete an electrical survey report.
+* Create, view, update and delete an electrical issue report.
+* List all survey questions.
 
 
 **Features** that will be **implemented** in the **future:**
 
-* List of survey questions will be available with each of the details available in collapsible elements.
+* Add a new survey question.
+* Display and list survey questions by category.
+* Give numerical overview of the survey results on the front page.
 * Create, update and delete possible to survey questions.
 * Overview of status of electrical rooms with pass/fail point numbers.
 * List of users on the site with edit and delete possible for admin users.
-* Carry out an electrical survey and store the data.
-* View completed surveys and edit results.
-* Create a single inspection point.
+* Possibility to mark items as completed.
+* Add links to photos for each item.
 
 
 ## Technologies Used
@@ -182,7 +191,8 @@ CSS code has been tested using the [CSS validator](http://jigsaw.w3.org/css-vali
 
 #### CSS Test Errors
 
-* No errors.
+* 129		Value Error : margin-left Too many values or values are not recognized : 4 40px
+* 167		Value Error : padding-left Too many values or values are not recognized : 4 40px.
 
 #### CSS Test Warnings
 
@@ -228,7 +238,34 @@ CSS code has been tested using the [CSS validator](http://jigsaw.w3.org/css-vali
 
 #### Summary of responsive design tests
 
-* Site Responsiveness has not been tested.
+![moto-g4](/wireframes/responsive-moto-g4.png)
+
+![galaxy-s5](/wireframes/responsive-galaxy-s5.png)
+
+![pixel-2](/wireframes/responsive-pixel-2.png)
+
+![pixel-2-xl](/wireframes/responsive-pixel-2-xl.png)
+
+![iphone5](/wireframes/responsive-iphone5.png)
+
+![iphone6-7-8](/wireframes/responsive-iphone6-7-8.png)
+
+![iphone-x](/wireframes/responsive-iphone-x.png)
+
+![ipad](/wireframes/responsive-ipad.png)
+
+![ipad-pro](/wireframes/responsive-ipad-pro.png)
+
+![surface-duo](/wireframes/responsive-surface-duo.png)
+
+![galaxy-fold](/wireframes/responsive-galaxy-fold.png)
+
+![nest-hub](/wireframes/responsive-nest-hub.png)
+
+![nest-hub-max](/wireframes/responsive-nest-hub-max.png)
+
+
+
 
 </details>
 
