@@ -53,7 +53,3 @@ function validateMaterializeSelect() {
     }
   });
 }
-
-// Code for expanding Materialize text areas automatically. testhigh
-//$('#issue_comment').val('');
-//M.textareaAutoResize($('#textarea1'));
